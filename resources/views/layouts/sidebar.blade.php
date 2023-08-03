@@ -4,12 +4,12 @@
     @auth('admin')
     <a href="{{route('admin.home')}}" class="brand-link">
       <img src="{{ asset('images/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text">Honghafeed</span>
+      <span class="brand-text">{{Auth::user()->name}}</span>
     </a>
     @else
     <a href="{{route('user.home')}}" class="brand-link">
       <img src="{{ asset('images/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text">Honghafeed</span>
+      <span class="brand-text">{{Auth::user()->name}}</span>
     </a>
     @endauth
 
@@ -20,30 +20,18 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            @auth('admin')
+          @auth('admin')
+          <li class="nav-item">
             <a href="{{route('admin.home')}}" class="nav-link {{ Request::is('admin') ? 'active' : '' }}">
-            @else
-            <a href="{{route('user.home')}}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
-            @endauth
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
-                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link {{ Request::is('user/dashboard') ? 'active' : '' }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v1</p>
-                </a>
-              </li>
-            </ul>
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link {{ Request::is('tender*') ? 'active' : '' }}">
+            <a href="{{route('admin.tenders.index')}}" class="nav-link {{ Request::is('admin/tender*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-th-list"></i>
               <p>
                 Tender
@@ -51,6 +39,60 @@
             </a>
           </li>
 
+          <li class="nav-item">
+            <a href="{{route('admin.profile')}}" class="nav-link {{ Request::is('admin/profile*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-id-card"></i>
+              <p>
+                Hồ sơ của tôi
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{route('admin.logout')}}" class="nav-link">
+              <i class="nav-icon fas fa-power-off"></i>
+              <p>
+                Đăng xuất
+              </p>
+            </a>
+          </li>
+          @else
+          <li class="nav-item">
+            <a href="{{route('user.home')}}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{route('user.tenders.index')}}" class="nav-link {{ Request::is('tender*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-th-list"></i>
+              <p>
+                Tender
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{route('user.profile')}}" class="nav-link {{ Request::is('profile*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-id-card"></i>
+              <p>
+                Hồ sơ của tôi
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{route('user.logout')}}" class="nav-link">
+              <i class="nav-icon fas fa-power-off"></i>
+              <p>
+                Đăng xuất
+              </p>
+            </a>
+          </li>
+          @endauth
 
           @auth('admin')
           <li class="nav-header">HỆ THỐNG</li>
@@ -70,6 +112,17 @@
               </p>
             </a>
           </li>
+
+          @can('create-admin')
+          <li class="nav-item">
+            <a href="{{route('admin.roles.index')}}" class="nav-link {{ Request::is('admin/roles*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-id-card-alt"></i>
+              <p>
+                Chức vụ
+              </p>
+            </a>
+          </li>
+          @endcan
           @endauth
         </ul>
       </nav>
