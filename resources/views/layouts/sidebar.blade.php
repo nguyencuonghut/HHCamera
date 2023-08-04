@@ -31,7 +31,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{route('admin.tenders.index')}}" class="nav-link {{ Request::is('admin/tender*') ? 'active' : '' }}">
+            <a href="#" class="nav-link {{ Request::is('admin/tender*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-th-list"></i>
               <p>
                 Tender
@@ -100,6 +100,14 @@
               <i class="nav-icon fas fa-user-shield"></i>
               <p>
                 Người quản trị
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('admin.farms.index')}}" class="nav-link {{ Request::is('admin/farms*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-warehouse"></i>
+              <p>
+                Trại
               </p>
             </a>
           </li>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminAdminController;
+use App\Http\Controllers\AdminFarmController;
 use App\Http\Controllers\AdminHomeController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminUserController;
@@ -34,6 +35,9 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::get('admins/data', [AdminAdminController::class, 'anyData'])->name('admins.data');
         Route::resource('admins', AdminAdminController::class);
+
+        Route::get('farms/data', [AdminFarmController::class, 'anyData'])->name('farms.data');
+        Route::resource('farms', AdminFarmController::class);
     });
 });
 
