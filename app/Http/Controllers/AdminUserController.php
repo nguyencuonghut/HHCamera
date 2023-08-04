@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Farm;
 use App\Models\User;
 use Datatables;
 use Illuminate\Http\Request;
@@ -27,7 +28,8 @@ class AdminUserController extends Controller
      */
     public function create()
     {
-        return view('admin.user.create');
+        $farms = Farm::all()->pluck('name', 'id');
+        return view('admin.user.create', ['farms' => $farms]);
     }
 
     /**
@@ -42,6 +44,7 @@ class AdminUserController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255',
             'password' => 'required|confirmed|min:6',
+            'farm_id' => 'required',
         ];
         $messages = [
             'name.required' => 'Bạn phải nhập tên.',
@@ -53,6 +56,7 @@ class AdminUserController extends Controller
             'password.required' => 'Bạn phải nhập mật khẩu.',
             'password.min' => 'Mật khẩu phải dài ít nhất 6 ký tự.',
             'password.confirmed' => 'Mật khẩu không khớp.',
+            'farm_id.required' => 'Bạn phải nhập tên trại',
         ];
         $request->validate($rules,$messages);
 
@@ -60,6 +64,7 @@ class AdminUserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
+        $user->farm_id = $request->farm_id;
         $user->save();
 
         Alert::toast('Tạo người dùng mới thành công!', 'success', 'top-right');
@@ -74,7 +79,7 @@ class AdminUserController extends Controller
      */
     public function show($id)
     {
-        //
+        return redirect()->back();
     }
 
     /**
@@ -86,7 +91,8 @@ class AdminUserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view('admin.user.edit', ['user' => $user]);
+        $farms = Farm::all()->pluck('name', 'id');
+        return view('admin.user.edit', ['user' => $user, 'farms' => $farms]);
     }
 
     /**
@@ -102,6 +108,7 @@ class AdminUserController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255',
             'password' => 'confirmed|',
+            'farm_id' => 'required',
         ];
         $messages = [
             'name.required' => 'Bạn phải nhập tên.',
@@ -111,6 +118,7 @@ class AdminUserController extends Controller
             'email.email' => 'Email sai định dạng.',
             'email.max' => 'Email dài quá 255 ký tự.',
             'password.confirmed' => 'Mật khẩu không khớp.',
+            'farm_id.required' => 'Bạn phải chọn tên trại',
         ];
         $request->validate($rules,$messages);
 
@@ -120,6 +128,7 @@ class AdminUserController extends Controller
         if(null != $request->password) {
             $user->password = bcrypt($request->password);
         }
+        $user->farm_id = $request->farm_id;
         $user->save();
         Alert::toast('Cập nhật thông tin thành công!', 'success', 'top-right');
         return redirect()->route('admin.users.index');
@@ -141,14 +150,19 @@ class AdminUserController extends Controller
 
     public function anyData()
     {
-        $users = User::select(['id', 'name', 'email'])->get();
+        $users = User::with('farm')->select(['id', 'name', 'email', 'farm_id'])->get();
         return Datatables::of($users)
             ->addIndexColumn()
             ->editColumn('name', function ($users) {
-                return $users->name;
+                return '<a href="'.route('admin.users.edit', $users->id).'">'.$users->name.'</a>';
+
             })
             ->editColumn('email', function ($users) {
                 return $users->email;
+            })
+            ->editColumn('farm', function ($users) {
+                return '<a href="'.route('admin.farms.edit', $users->farm->id).'">'.$users->farm->name.'</a>';
+
             })
             ->addColumn('edit', function ($users) {
                 return '<a href="' . route("admin.users.edit", $users->id) . '" class="btn btn-warning"> Sửa</a>';
@@ -160,7 +174,7 @@ class AdminUserController extends Controller
 
                     {{csrf_field()}}
                 </form>')
-            ->rawColumns(['edit', 'delete'])
+            ->rawColumns(['name', 'farm', 'edit', 'delete'])
             ->make(true);
     }
 }

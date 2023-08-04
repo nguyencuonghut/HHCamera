@@ -31,6 +31,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'farm_id',
     ];
 
     /**
@@ -41,4 +42,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function farm()
+    {
+        return $this->belongsTo(Farm::class);
+    }
 }

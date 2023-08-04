@@ -46,6 +46,7 @@
                     <th>STT</th>
                     <th>Họ tên</th>
                     <th>Email</th>
+                    <th>Tên trại</th>
                     <th>Sửa</th>
                     <th>Xóa</th>
                   </tr>
@@ -95,14 +96,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
 
             },
@@ -110,28 +111,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                        columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                        columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             }
         ],
@@ -141,6 +142,7 @@
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
+            {data: 'farm', name: 'farm'},
             {data: 'edit', name: 'edit', orderable: false, searchable: false},
             {data: 'delete', name: 'delete', orderable: false, searchable: false},
        ]

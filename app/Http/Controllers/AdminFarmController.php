@@ -134,6 +134,13 @@ class AdminFarmController extends Controller
             ->editColumn('name', function ($farms) {
                 return $farms->name;
             })
+            ->addColumn('user', function ($farms) {
+                if($farms->user) {
+                    return $farms->user->name;
+                } else {
+                    return '-';
+                }
+            })
             ->addColumn('edit', function ($farms) {
                 return '<a href="' . route("admin.farms.edit", $farms->id) . '" class="btn btn-warning"> Sửa</a>';
             })

@@ -71,6 +71,21 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="control-group">
+                                        <label class="required-field" class="control-label">Trại</label>
+                                        <div class="controls">
+                                            <select name="farm_id" id="farm_id" class="form-control select2">
+                                                @foreach($farms as $key => $value)
+                                                    <option value="{{$key}}" {{ $key == $user->farm_id ? 'selected' : '' }}>{{$value}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <br>
                             <div class="control-group">
                                 <div class="controls">
