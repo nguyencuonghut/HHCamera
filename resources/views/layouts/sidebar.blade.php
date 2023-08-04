@@ -107,7 +107,7 @@
             <a href="{{route('admin.farms.index')}}" class="nav-link {{ Request::is('admin/farms*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-warehouse"></i>
               <p>
-                Trại
+                Danh sách trại
               </p>
             </a>
           </li>
