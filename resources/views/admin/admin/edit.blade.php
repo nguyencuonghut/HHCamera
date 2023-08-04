@@ -14,7 +14,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">Tất cả tài khoản quản trị</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('admin.admins.index') }}">Tất cả tài khoản quản trị</a></li>
               <li class="breadcrumb-item active">Sửa tài khoản</li>
             </ol>
           </div><!-- /.col -->
