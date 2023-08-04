@@ -111,6 +111,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{route('admin.device_categories.index')}}" class="nav-link {{ Request::is('admin/device_categories*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-tags"></i>
+              <p>
+                Danh mục thiết bị
+              </p>
+            </a>
+          </li>
 
           @can('create-admin')
           <li class="nav-item">
