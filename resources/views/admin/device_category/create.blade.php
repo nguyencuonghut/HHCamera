@@ -45,7 +45,7 @@
                             <br>
                             <div class="control-group">
                                 <div class="controls">
-                                    <input type="submit" value="Thêm trại" class="btn btn-success">
+                                    <input type="submit" value="Thêm mới" class="btn btn-success">
                                 </div>
                             </div>
                         <div>

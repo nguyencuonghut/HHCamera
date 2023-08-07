@@ -42,7 +42,7 @@ class AdminDeviceCategoryController extends Controller
         ];
         $messages = [
             'name.required' => 'Bạn phải nhập tên.',
-            'name.unique' => 'Tên này đã bị trùng với trại khác.',
+            'name.unique' => 'Tên này đã bị trùng với danh mục thiết bị khác.',
             'name.max' => 'Tên dài quá 255 ký tự.',
         ];
         $request->validate($rules,$messages);
@@ -51,7 +51,7 @@ class AdminDeviceCategoryController extends Controller
         $device_category->name = $request->name;
         $device_category->save();
 
-        Alert::toast('Tạo trại mới thành công!', 'success', 'top-right');
+        Alert::toast('Tạo danh mục thiết bị mới thành công!', 'success', 'top-right');
         return redirect()->route('admin.device_categories.index');
     }
 
@@ -92,7 +92,7 @@ class AdminDeviceCategoryController extends Controller
         ];
         $messages = [
             'name.required' => 'Bạn phải nhập tên.',
-            'name.unique' => 'Tên này đã bị trùng với trại khác.',
+            'name.unique' => 'Tên này đã bị trùng với danh mục thiết bị khác.',
             'name.max' => 'Tên dài quá 255 ký tự.',
         ];
         $request->validate($rules,$messages);
@@ -114,7 +114,7 @@ class AdminDeviceCategoryController extends Controller
     {
         $device_category = DeviceCategory::findOrFail($id);
         $device_category->destroy($id);
-        Alert::toast('Xóa trại thành công!', 'success', 'top-right');
+        Alert::toast('Xóa danh mục thiết bị thành công!', 'success', 'top-right');
         return redirect()->route('admin.device_categories.index');
     }
 
