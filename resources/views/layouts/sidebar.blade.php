@@ -58,10 +58,19 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{route('user.profile')}}" class="nav-link {{ Request::is('profile*') ? 'active' : '' }}">
+            <a href="#" class="nav-link {{ Request::is('profile*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-id-card"></i>
               <p>
                 Hồ sơ của tôi
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{route('devices.index')}}" class="nav-link {{ Request::is('devices*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-th-list"></i>
+              <p>
+                Danh sách thiết bị
               </p>
             </a>
           </li>

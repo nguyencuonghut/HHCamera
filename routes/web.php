@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminFarmController;
 use App\Http\Controllers\AdminHomeController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\UserDeviceController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 use Illuminate\Support\Facades\Route;
@@ -62,5 +63,7 @@ Route::get('/logout', [UserLoginController::class, 'logout'])->name('user.logout
 
 Route::group(['middleware'=>'auth:web'], function() {
     Route::get('/', [UserHomeController::class, 'index'])->name('user.home');
-});
 
+    Route::get('devices/data', [UserDeviceController::class, 'anyData'])->name('devices.data');
+    Route::resource('devices', UserDeviceController::class);
+});
