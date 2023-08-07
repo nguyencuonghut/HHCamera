@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             AdminsTableSeeder::class,
             UsersTableSeeder::class,
             DeviceCategorySeeder::class,
+            DeviceSeeder::class,
         ]);
     }
 }

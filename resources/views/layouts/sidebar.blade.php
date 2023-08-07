@@ -31,10 +31,10 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link {{ Request::is('admin/tender*') ? 'active' : '' }}">
+            <a href="{{route('admin.devices.index')}}" class="nav-link {{ Request::is('admin/devices*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-th-list"></i>
               <p>
-                Tender
+                Danh sách thiết bị
               </p>
             </a>
           </li>
@@ -53,15 +53,6 @@
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
-              </p>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a href="{{route('user.tenders.index')}}" class="nav-link {{ Request::is('tender*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-th-list"></i>
-              <p>
-                Tender
               </p>
             </a>
           </li>

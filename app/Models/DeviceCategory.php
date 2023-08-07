@@ -10,4 +10,9 @@ class DeviceCategory extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    public function devices()
+    {
+        return $this->hasMany(Device::class);
+    }
 }
