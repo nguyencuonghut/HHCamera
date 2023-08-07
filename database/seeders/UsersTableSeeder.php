@@ -31,7 +31,7 @@ class UsersTableSeeder extends Seeder
             1 =>
                 array (
                     'id' => 2,
-                    'name' => 'Trại heo Ba Vì',
+                    'name' => 'Trại heo Đoan Hạ',
                     'email' => 'thdoanha@honghafeed.com.vn',
                     'password' => bcrypt('Hongha@123'),
                     'farm_id' => 2,
