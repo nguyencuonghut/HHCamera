@@ -111,16 +111,14 @@
             </a>
           </li>
 
-          @can('create-admin')
           <li class="nav-item">
-            <a href="{{route('admin.roles.index')}}" class="nav-link {{ Request::is('admin/roles*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-id-card-alt"></i>
+            <a href="{{route('admin.error_types.index')}}" class="nav-link {{ Request::is('admin/error_types*') ? 'active' : '' }}">
+              <i class="fas fa-exclamation-triangle"></i>
               <p>
-                Chức vụ
+                &nbsp &nbsp Danh mục lỗi
               </p>
             </a>
           </li>
-          @endcan
           @endauth
         </ul>
       </nav>

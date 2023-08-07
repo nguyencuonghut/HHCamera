@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminAdminController;
 use App\Http\Controllers\AdminDeviceCategoryController;
 use App\Http\Controllers\AdminDeviceController;
+use App\Http\Controllers\AdminErrorTypeController;
 use App\Http\Controllers\AdminFarmController;
 use App\Http\Controllers\AdminHomeController;
 use App\Http\Controllers\AdminLoginController;
@@ -46,6 +47,9 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::get('devices/data', [AdminDeviceController::class, 'anyData'])->name('devices.data');
         Route::resource('devices', AdminDeviceController::class);
+
+        Route::get('error_types/data', [AdminErrorTypeController::class, 'anyData'])->name('error_types.data');
+        Route::resource('error_types', AdminErrorTypeController::class);
     });
 });
 
