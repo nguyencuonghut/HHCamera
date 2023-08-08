@@ -190,6 +190,7 @@ class UserDeviceController extends Controller
             })
             ->addColumn('action', function ($devices) {
                 $action = '';
+                $action = $action . ' <a href="' . route("devices.getChangeStatus", $devices->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-random"></i></a>';
                 $action = $action . ' <a href="' . route("devices.edit", $devices->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-pen"></i></a>';
                 $action = $action . '<form style="display:inline" action="'. route("devices.destroy", $devices->id) . '" method="POST">
                 <input type="hidden" name="_method" value="DELETE">
@@ -200,5 +201,29 @@ class UserDeviceController extends Controller
             })
             ->rawColumns(['name', 'status', 'device_category', 'action'])
             ->make(true);
+    }
+
+    public function getChangeStatus($id)
+    {
+        $device = Device::findOrFail($id);
+        return view('user.device.changeStatus', ['device' => $device]);
+    }
+
+
+    public function postChangeStatus(Request $request, $id)
+    {
+        $device = Device::findOrFail($id);
+        if($device->status != $request->status) {
+            // Update status
+            $device->status = $request->status;
+            $device->save();
+
+            Alert::toast('Đổi trạng thái thành công!', 'success', 'top-right');
+            return redirect()->route('devices.index');
+        } else {
+            // Warning
+            Alert::toast('Trạng thái thiết bị vẫn như cũ!', 'warning', 'top-right');
+            return redirect()->route('devices.index');
+        }
     }
 }

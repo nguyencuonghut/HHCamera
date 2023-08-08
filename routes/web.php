@@ -66,4 +66,7 @@ Route::group(['middleware'=>'auth:web'], function() {
 
     Route::get('devices/data', [UserDeviceController::class, 'anyData'])->name('devices.data');
     Route::resource('devices', UserDeviceController::class);
+    Route::get('devices/getChangeStatus/{id}', [UserDeviceController::class, 'getChangeStatus'])->name('devices.getChangeStatus');
+    Route::patch('devices/postChangeStatus/{id}', [UserDeviceController::class, 'postChangeStatus'])->name('devices.postChangeStatus');
+
 });
