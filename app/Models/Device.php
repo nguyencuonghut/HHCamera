@@ -20,4 +20,10 @@ class Device extends Model
     {
         return $this->belongsTo(DeviceCategory::class);
     }
+
+    public function errors()
+    {
+        return $this->hasMany(Error::class);
+    }
+
 }

@@ -76,6 +76,15 @@
           </li>
 
           <li class="nav-item">
+            <a href="{{route('errors.index')}}" class="nav-link {{ Request::is('errors*') ? 'active' : '' }}">
+              <i class="fas fa-exclamation-triangle"></i>
+              <p>
+                &nbsp &nbsp Danh sách lỗi
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
             <a href="{{route('user.logout')}}" class="nav-link">
               <i class="nav-icon fas fa-power-off"></i>
               <p>

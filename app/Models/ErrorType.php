@@ -10,4 +10,9 @@ class ErrorType extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    public function errors()
+    {
+        return $this->hasMany(Error::class);
+    }
 }

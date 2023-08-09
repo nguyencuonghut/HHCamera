@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminHomeController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\UserDeviceController;
+use App\Http\Controllers\UserErrorController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 use Illuminate\Support\Facades\Route;
@@ -68,5 +69,8 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::resource('devices', UserDeviceController::class);
     Route::get('devices/getChangeStatus/{id}', [UserDeviceController::class, 'getChangeStatus'])->name('devices.getChangeStatus');
     Route::patch('devices/postChangeStatus/{id}', [UserDeviceController::class, 'postChangeStatus'])->name('devices.postChangeStatus');
+
+    Route::get('errors/data', [UserErrorController::class, 'anyData'])->name('errors.data');
+    Route::resource('errors', UserErrorController::class);
 
 });
