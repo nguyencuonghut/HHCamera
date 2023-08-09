@@ -179,7 +179,7 @@ class UserDeviceController extends Controller
                 return $devices->position;
             })
             ->editColumn('ip', function ($devices) {
-                return $devices->ip . ' ' . $devices->status;
+                return $devices->ip;
             })
             ->editColumn('status', function ($devices) {
                 if($devices->status == 'ON') {
