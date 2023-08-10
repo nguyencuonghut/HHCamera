@@ -36,6 +36,23 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-12">
+            @if($cam_on_cnt || $cam_off_cnt)
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">
+                        <b style="color:#212529;">CAMERA:</b>
+                        <span class="badge bg-success">ON</span> {{$cam_on_cnt}}
+                        &nbsp;
+                        <span class="badge bg-danger">OFF</span> {{$cam_off_cnt}}
+                    </h5>
+                </div>
+
+                <div class="card-body">
+                <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+            </div>
+            @endif
+
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
@@ -78,6 +95,8 @@
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+<!-- ChartJS -->
+<script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 
 
 <style type="text/css">
@@ -148,5 +167,38 @@
        ]
       }).buttons().container().appendTo('#devices-table_wrapper .col-md-6:eq(0)');
     });
+
+
+    //-------------
+    //- DONUT CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+    var cam_on_cnt =  {{ Js::from($cam_on_cnt) }};
+    var cam_off_cnt =  {{ Js::from($cam_off_cnt) }};
+    var donutData        = {
+      labels: [
+          'ON',
+          'OFF',
+      ],
+      datasets: [
+        {
+          data: [cam_on_cnt,cam_off_cnt],
+          backgroundColor : ['#00a65a', '#f56954'],
+        }
+      ]
+    }
+    var donutOptions     = {
+      maintainAspectRatio : false,
+      responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    new Chart(donutChartCanvas, {
+      type: 'doughnut',
+      data: donutData,
+      options: donutOptions
+    })
+
   </script>
 @endpush

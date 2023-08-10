@@ -19,7 +19,15 @@ class UserDeviceController extends Controller
      */
     public function index()
     {
-        return view('user.device.index');
+        $farm_id = Auth::user()->farm_id;
+        $cam_on_cnt = Device::where('farm_id', $farm_id)->where('device_category_id', 1)->where('status', "ON")->count();
+        $cam_off_cnt = Device::where('farm_id', $farm_id)->where('device_category_id', 1)->where('status', "OFF")->count();
+        return view('user.device.index',
+                    [
+                        'cam_on_cnt' => $cam_on_cnt,
+                        'cam_off_cnt' => $cam_off_cnt
+                    ]
+                );
     }
 
     /**
@@ -190,8 +198,8 @@ class UserDeviceController extends Controller
             })
             ->addColumn('action', function ($devices) {
                 $action = '';
-                $action = $action . ' <a href="' . route("devices.getChangeStatus", $devices->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-random"></i></a>';
                 $action = $action . ' <a href="' . route("devices.edit", $devices->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-pen"></i></a>';
+
                 $action = $action . '<form style="display:inline" action="'. route("devices.destroy", $devices->id) . '" method="POST">
                 <input type="hidden" name="_method" value="DELETE">
                 <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
