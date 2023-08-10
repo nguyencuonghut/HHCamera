@@ -48,7 +48,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::resource('device_categories', AdminDeviceCategoryController::class);
 
         Route::get('devices/data', [AdminDeviceController::class, 'anyData'])->name('devices.data');
-        Route::get('devices/farmData/{supplier_id}', [AdminDeviceController::class, 'farmData'])->name('devices.farmData');
+        Route::get('devices/farmData/{farm_id}', [AdminDeviceController::class, 'farmData'])->name('devices.farmData');
         Route::resource('devices', AdminDeviceController::class);
 
         Route::get('error_types/data', [AdminErrorTypeController::class, 'anyData'])->name('error_types.data');
@@ -72,6 +72,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::patch('devices/postChangeStatus/{id}', [UserDeviceController::class, 'postChangeStatus'])->name('devices.postChangeStatus');
 
     Route::get('errors/data', [UserErrorController::class, 'anyData'])->name('errors.data');
+    Route::get('errors/deviceData/{device_id}', [UserErrorController::class, 'deviceData'])->name('errors.deviceData');
     Route::resource('errors', UserErrorController::class);
 
 });

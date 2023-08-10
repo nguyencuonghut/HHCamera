@@ -159,7 +159,7 @@ class UserErrorController extends Controller
         return Datatables::of($errors)
             ->addIndexColumn()
             ->editColumn('device', function ($errors) {
-                return '<a href="'.route('errors.edit', $errors->id).'">'.$errors->device->name.'</a>';
+                return '<a href="'.route('devices.show', $errors->device->id).'">'.$errors->device->name.'</a>';
 
             })
             ->editColumn('type', function ($errors) {
@@ -188,6 +188,41 @@ class UserErrorController extends Controller
                 return $action;
             })
             ->rawColumns(['device', 'action'])
+            ->make(true);
+    }
+
+    public function deviceData($device_id)
+    {
+        $errors = Error::where('device_id', $device_id)->with('device')->with('type')->select(['id', 'device_id', 'type_id', 'cause', 'solution', 'detection_time', 'recovery_time'])->get();
+
+        return Datatables::of($errors)
+            ->addIndexColumn()
+            ->editColumn('type', function ($errors) {
+                return $errors->type->name;
+            })
+            ->editColumn('cause', function ($errors) {
+                return $errors->cause;
+            })
+            ->editColumn('solution', function ($errors) {
+                return $errors->solution;
+            })
+            ->editColumn('detection_time', function ($errors) {
+                return $errors->detection_time;
+            })
+            ->editColumn('recovery_time', function ($errors) {
+                return $errors->recovery_time;
+            })
+            ->addColumn('action', function ($errors) {
+                $action = '';
+                $action = $action . ' <a href="' . route("errors.edit", $errors->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-pen"></i></a>';
+                $action = $action . '<form style="display:inline" action="'. route("errors.destroy", $errors->id) . '" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
+
+                return $action;
+            })
+            ->rawColumns(['action'])
             ->make(true);
     }
 }
