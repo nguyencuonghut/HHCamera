@@ -74,4 +74,28 @@ class AdminErrorController extends Controller
             ->rawColumns(['device'])
             ->make(true);
     }
+
+    public function deviceData($device_id)
+    {
+        $errors = Error::where('device_id', $device_id)->with('device')->with('type')->select(['id', 'device_id', 'type_id', 'cause', 'solution', 'detection_time', 'recovery_time'])->get();
+
+        return Datatables::of($errors)
+            ->addIndexColumn()
+            ->editColumn('type', function ($errors) {
+                return $errors->type->name;
+            })
+            ->editColumn('cause', function ($errors) {
+                return $errors->cause;
+            })
+            ->editColumn('solution', function ($errors) {
+                return $errors->solution;
+            })
+            ->editColumn('detection_time', function ($errors) {
+                return $errors->detection_time;
+            })
+            ->editColumn('recovery_time', function ($errors) {
+                return $errors->recovery_time;
+            })
+            ->make(true);
+    }
 }

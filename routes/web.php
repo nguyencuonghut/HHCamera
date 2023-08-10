@@ -58,6 +58,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('errors', [AdminErrorController::class, 'index'])->name('errors.index');
         Route::get('errors/data', [AdminErrorController::class, 'anyData'])->name('errors.data');
         Route::get('errors/farmData/{farm_id}', [AdminErrorController::class, 'farmData'])->name('errors.farmData');
+        Route::get('errors/deviceData/{device_id}', [AdminErrorController::class, 'deviceData'])->name('errors.deviceData');
     });
 });
 
