@@ -186,6 +186,47 @@ class AdminDeviceController extends Controller
                 }
             })
             ->editColumn('farm', function ($devices) {
+                return '<a href="'.route('admin.farms.show', $devices->farm->id).'">'.$devices->farm->name.'</a>';
+
+            })
+            ->addColumn('action', function ($devices) {
+                $action = '';
+                $action = $action . ' <a href="' . route("admin.devices.edit", $devices->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-pen"></i></a>';
+
+                $action = $action . '<form style="display:inline" action="'. route("admin.devices.destroy", $devices->id) . '" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
+
+                return $action;
+            })
+            ->rawColumns(['name', 'status', 'device_category', 'farm', 'action'])
+            ->make(true);
+    }
+
+    public function farmData($farm_id)
+    {
+        $devices = Device::where('farm_id', $farm_id)->with('farm')->with('device_category')->select(['id', 'name', 'position', 'ip', 'status', 'farm_id', 'device_category_id'])->get();
+        return Datatables::of($devices)
+            ->addIndexColumn()
+            ->editColumn('name', function ($devices) {
+                return '<a href="'.route('admin.devices.edit', $devices->id).'">'.$devices->name.'</a>';
+
+            })
+            ->editColumn('position', function ($devices) {
+                return $devices->position;
+            })
+            ->editColumn('ip', function ($devices) {
+                return $devices->ip;
+            })
+            ->editColumn('status', function ($devices) {
+                if($devices->status == 'ON') {
+                    return '<span class="badge badge-success">ON</span>';
+                } else {
+                    return '<span class="badge badge-danger">OFF</span>';
+                }
+            })
+            ->editColumn('farm', function ($devices) {
                 return '<a href="'.route('admin.farms.edit', $devices->farm->id).'">'.$devices->farm->name.'</a>';
 
             })

@@ -48,6 +48,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::resource('device_categories', AdminDeviceCategoryController::class);
 
         Route::get('devices/data', [AdminDeviceController::class, 'anyData'])->name('devices.data');
+        Route::get('devices/farmData/{supplier_id}', [AdminDeviceController::class, 'farmData'])->name('devices.farmData');
         Route::resource('devices', AdminDeviceController::class);
 
         Route::get('error_types/data', [AdminErrorTypeController::class, 'anyData'])->name('error_types.data');

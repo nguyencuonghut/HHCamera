@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Device;
 use App\Models\Farm;
 use Datatables;
 use Illuminate\Http\Request;
@@ -64,9 +65,16 @@ class AdminFarmController extends Controller
      * @param  \App\Models\Farm  $farm
      * @return \Illuminate\Http\Response
      */
-    public function show(Farm $farm)
+    public function show($id)
     {
-        return redirect()->back();
+        $farm = Farm::findOrFail($id);
+        $farm_cam_on_cnt = Device::where('device_category_id', 1)->where('farm_id', $farm->id)->where('status', "ON")->count();
+        $farm_cam_off_cnt = Device::where('device_category_id', 1)->where('farm_id', $farm->id)->where('status', "OFF")->count();
+        return view('admin.farm.show',
+                    ['farm' => $farm,
+                    'farm_cam_on_cnt' => $farm_cam_on_cnt,
+                    'farm_cam_off_cnt' => $farm_cam_off_cnt
+                    ]);
     }
 
     /**
@@ -132,7 +140,7 @@ class AdminFarmController extends Controller
         return Datatables::of($farms)
             ->addIndexColumn()
             ->editColumn('name', function ($farms) {
-                return $farms->name;
+                return '<a href="'.route('admin.farms.show', $farms->id).'">'.$farms->name.'</a>';
             })
             ->addColumn('user', function ($farms) {
                 if($farms->user) {
@@ -141,17 +149,17 @@ class AdminFarmController extends Controller
                     return '-';
                 }
             })
-            ->addColumn('edit', function ($farms) {
-                return '<a href="' . route("admin.farms.edit", $farms->id) . '" class="btn btn-warning"> Sửa</a>';
-            })
-            ->addColumn('delete', '
-                <form action="{{ route(\'admin.farms.destroy\', $id) }}" method="POST">
-                     <input type="hidden" name="_method" value="DELETE">
-                    <input type="submit" name="submit" value="Xóa" class="btn btn-danger" onClick="return confirm(\'Bạn có chắc chắn muốn xóa?\')"">
+            ->addColumn('action', function ($farms) {
+                $action = '';
+                $action = $action . ' <a href="' . route("admin.farms.edit", $farms->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-pen"></i></a>';
+                $action = $action . '<form style="display:inline" action="'. route("admin.farms.destroy", $farms->id) . '" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
 
-                    {{csrf_field()}}
-                </form>')
-            ->rawColumns(['edit', 'delete'])
+                return $action;
+            })
+            ->rawColumns(['name', 'action'])
             ->make(true);
     }
 }

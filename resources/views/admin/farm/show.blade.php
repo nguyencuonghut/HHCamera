@@ -1,5 +1,5 @@
 @section('title')
-{{ 'Tất cả trại' }}
+{{ 'Chi tiết trại' }}
 @endsection
 @push('styles')
   <!-- DataTables -->
@@ -17,12 +17,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Tất cả trại</h1>
+          <h1 class="m-0">Chi tiết {{$farm->name}}</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Trang chủ</a></li>
-            <li class="breadcrumb-item active">Trại</li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.farms.index') }}">Tất cả trại</a></li>
+            <li class="breadcrumb-item active">{{$farm->name}}</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -36,20 +36,36 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-12">
+            @if($farm_cam_on_cnt || $farm_cam_off_cnt)
             <div class="card">
-              <!-- /.card-header -->
+                <div class="card-header">
+                    <h5 class="card-title">
+                        <b style="color:#212529;">CAMERA:</b>
+                        <span class="badge bg-success">ON</span> {{$farm_cam_on_cnt}}
+                        &nbsp;
+                        <span class="badge bg-danger">OFF</span> {{$farm_cam_off_cnt}}
+                    </h5>
+                </div>
+
+                <div class="card-body">
+                <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+            </div>
+            @endif
+            <div class="card">
               <div class="card-body">
-                <a href="{{ route('admin.farms.create') }}" class="btn btn-success">Tạo mới trại</a>
-                <table id="farms-table" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>STT</th>
-                    <th>Tên trại</th>
-                    <th>Người phụ trách</th>
-                    <th>Thao tác</th>
-                  </tr>
-                  </thead>
-                </table>
+                <table id="devices-table" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Tên</th>
+                      <th>Vị trí</th>
+                      <th>Địa chỉ IP</th>
+                      <th>Trạng thái</th>
+                      <th>Thao tác</th>
+                    </tr>
+                    </thead>
+                  </table>
               </div>
             </div>
         </div>
@@ -76,6 +92,8 @@
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+<!-- ChartJS -->
+<script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 
 
 <style type="text/css">
@@ -85,23 +103,24 @@
 </style>
 
 
+
 <script>
     $(function () {
-      $("#farms-table").DataTable({
+      $("#devices-table").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,
         buttons: [
             {
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3,4]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3,4]
                 }
 
             },
@@ -109,40 +128,75 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3,4]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3,4]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3,4]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3,4]
                 }
             }
         ],
         dom: 'Blfrtip',
-        ajax: ' {!! route('admin.farms.data') !!}',
+        ajax: ' {!! route('admin.devices.farmData', $farm->id) !!}',
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'name', name: 'name'},
-            {data: 'user', name: 'user'},
+            {data: 'position', name: 'position'},
+            {data: 'ip', name: 'ip'},
+            {data: 'status', name: 'status'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
        ]
-      }).buttons().container().appendTo('#farms-table_wrapper .col-md-6:eq(0)');
+      }).buttons().container().appendTo('#devices-table_wrapper .col-md-6:eq(0)');
     });
+
+
+    //-------------
+    //- DONUT CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+    var farm_cam_on_cnt =  {{ Js::from($farm_cam_on_cnt) }};
+    var farm_cam_off_cnt =  {{ Js::from($farm_cam_off_cnt) }};
+    var donutData        = {
+      labels: [
+          'ON',
+          'OFF',
+      ],
+      datasets: [
+        {
+          data: [farm_cam_on_cnt,farm_cam_off_cnt],
+          backgroundColor : ['#00a65a', '#f56954'],
+        }
+      ]
+    }
+    var donutOptions     = {
+      maintainAspectRatio : false,
+      responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    new Chart(donutChartCanvas, {
+      type: 'doughnut',
+      data: donutData,
+      options: donutOptions
+    })
+
   </script>
 @endpush
