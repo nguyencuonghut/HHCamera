@@ -210,8 +210,17 @@ class AdminDeviceController extends Controller
         return Datatables::of($devices)
             ->addIndexColumn()
             ->editColumn('name', function ($devices) {
-                return '<a href="'.route('admin.devices.edit', $devices->id).'">'.$devices->name.'</a>';
-
+                $name = '';
+                if($devices->errors->count()) {
+                    $name = $name . '<span class="badge badge-danger"> '
+                        .$devices->errors->count()
+                        . '</span>'
+                        . ' '
+                        . '<a href="'.route('admin.devices.show', $devices->id).'">'.$devices->name.'</a>';
+                } else {
+                    $name = $name . '<a href="'.route('admin.devices.show', $devices->id).'">'.$devices->name.'</a>';
+                }
+                return $name;
             })
             ->editColumn('position', function ($devices) {
                 return $devices->position;

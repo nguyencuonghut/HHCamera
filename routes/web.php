@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminAdminController;
 use App\Http\Controllers\AdminDeviceCategoryController;
 use App\Http\Controllers\AdminDeviceController;
+use App\Http\Controllers\AdminErrorController;
 use App\Http\Controllers\AdminErrorTypeController;
 use App\Http\Controllers\AdminFarmController;
 use App\Http\Controllers\AdminHomeController;
@@ -53,6 +54,8 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::get('error_types/data', [AdminErrorTypeController::class, 'anyData'])->name('error_types.data');
         Route::resource('error_types', AdminErrorTypeController::class);
+
+        Route::get('errors/farmData/{farm_id}', [AdminErrorController::class, 'farmData'])->name('errors.farmData');
     });
 });
 

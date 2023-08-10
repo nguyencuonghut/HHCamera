@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Device;
 use App\Models\Farm;
 use Datatables;
+use App\Models\Error;
+use App\Models\ErrorType;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -70,10 +72,41 @@ class AdminFarmController extends Controller
         $farm = Farm::findOrFail($id);
         $farm_cam_on_cnt = Device::where('device_category_id', 1)->where('farm_id', $farm->id)->where('status', "ON")->count();
         $farm_cam_off_cnt = Device::where('device_category_id', 1)->where('farm_id', $farm->id)->where('status', "OFF")->count();
+
+        $farm_device_ids = Device::where('farm_id', $farm->id)->pluck('id')->toArray();
+        $error_type_id_1_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 1)->count();
+        $error_type_id_2_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 2)->count();
+        $error_type_id_3_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 3)->count();
+        $error_type_id_4_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 4)->count();
+        $error_type_id_5_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 5)->count();
+        $error_type_id_6_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 6)->count();
+        $error_type_id_7_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 7)->count();
+
+        $error_type_id_1_name = ErrorType::findOrFail(1)->name;
+        $error_type_id_2_name = ErrorType::findOrFail(2)->name;
+        $error_type_id_3_name = ErrorType::findOrFail(3)->name;
+        $error_type_id_4_name = ErrorType::findOrFail(4)->name;
+        $error_type_id_5_name = ErrorType::findOrFail(5)->name;
+        $error_type_id_6_name = ErrorType::findOrFail(6)->name;
+        $error_type_id_7_name = ErrorType::findOrFail(7)->name;
         return view('admin.farm.show',
                     ['farm' => $farm,
                     'farm_cam_on_cnt' => $farm_cam_on_cnt,
-                    'farm_cam_off_cnt' => $farm_cam_off_cnt
+                    'farm_cam_off_cnt' => $farm_cam_off_cnt,
+                    'error_type_id_1_cnt' => $error_type_id_1_cnt,
+                    'error_type_id_2_cnt' => $error_type_id_2_cnt,
+                    'error_type_id_3_cnt' => $error_type_id_3_cnt,
+                    'error_type_id_4_cnt' => $error_type_id_4_cnt,
+                    'error_type_id_5_cnt' => $error_type_id_5_cnt,
+                    'error_type_id_6_cnt' => $error_type_id_6_cnt,
+                    'error_type_id_7_cnt' => $error_type_id_7_cnt,
+                    'error_type_id_1_name' => $error_type_id_1_name,
+                    'error_type_id_2_name' => $error_type_id_2_name,
+                    'error_type_id_3_name' => $error_type_id_3_name,
+                    'error_type_id_4_name' => $error_type_id_4_name,
+                    'error_type_id_5_name' => $error_type_id_5_name,
+                    'error_type_id_6_name' => $error_type_id_6_name,
+                    'error_type_id_7_name' => $error_type_id_7_name,
                     ]);
     }
 

@@ -34,13 +34,13 @@
   <section class="content">
     <div class="container-fluid">
       <!-- Small boxes (Stat box) -->
+      @if($farm_cam_on_cnt || $farm_cam_off_cnt)
       <div class="row">
-        <div class="col-12">
-            @if($farm_cam_on_cnt || $farm_cam_off_cnt)
+        <div class="col-6">
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title">
-                        <b style="color:#212529;">CAMERA:</b>
+                        <b style="color:##212529;">TỔNG HỢP CAMERA</b>
                         <span class="badge bg-success">ON</span> {{$farm_cam_on_cnt}}
                         &nbsp;
                         <span class="badge bg-danger">OFF</span> {{$farm_cam_off_cnt}}
@@ -48,11 +48,31 @@
                 </div>
 
                 <div class="card-body">
-                <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                <canvas id="donutCamChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                 </div>
             </div>
-            @endif
+        </div>
+        <div class="col-6">
             <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">
+                        <b style="color:##212529;">TỔNG HỢP LỖI</b>
+                    </h5>
+                </div>
+
+                <div class="card-body">
+                <canvas id="donutErrorChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+            </div>
+        </div>
+      </div>
+      @endif
+      <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Danh sách thiết bị</h5>
+                </div>
               <div class="card-body">
                 <table id="devices-table" class="table table-bordered table-striped">
                     <thead>
@@ -63,6 +83,30 @@
                       <th>Địa chỉ IP</th>
                       <th>Trạng thái</th>
                       <th>Thao tác</th>
+                    </tr>
+                    </thead>
+                  </table>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Danh sách lỗi</h5>
+                </div>
+              <div class="card-body">
+                <table id="errors-table" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên thiết bị</th>
+                        <th>Nguyên nhân</th>
+                        <th>Biện pháp</th>
+                        <th>Thời gian phát hiện</th>
+                        <th>Thời gian sửa xong</th>
+                        <th>Phân loại</th>
                     </tr>
                     </thead>
                   </table>
@@ -166,12 +210,73 @@
       }).buttons().container().appendTo('#devices-table_wrapper .col-md-6:eq(0)');
     });
 
+    $(function () {
+      $("#errors-table").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        buttons: [
+            {
+                extend: 'copy',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5,6]
+                }
+            },
+            {
+                extend: 'csv',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5,6]
+                }
+
+            },
+            {
+                extend: 'excel',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5,6]
+                }
+            },
+            {
+                extend: 'pdf',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5,6]
+                }
+            },
+            {
+                extend: 'print',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5,6]
+                }
+            },
+            {
+                extend: 'colvis',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5,6]
+                }
+            }
+        ],
+        dom: 'Blfrtip',
+        ajax: ' {!! route('admin.errors.farmData', $farm->id) !!}',
+        columns: [
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'device', name: 'device'},
+            {data: 'cause', name: 'cause'},
+            {data: 'solution', name: 'ip'},
+            {data: 'detection_time', name: 'detection_time'},
+            {data: 'recovery_time', name: 'recovery_time'},
+            {data: 'type', name: 'type'},
+       ]
+      }).buttons().container().appendTo('#devices-table_wrapper .col-md-6:eq(0)');
+    });
 
     //-------------
-    //- DONUT CHART -
+    //- DONUT CAM CHART -
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
-    var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+    var donutCamChartCanvas = $('#donutCamChart').get(0).getContext('2d')
     var farm_cam_on_cnt =  {{ Js::from($farm_cam_on_cnt) }};
     var farm_cam_off_cnt =  {{ Js::from($farm_cam_off_cnt) }};
     var donutData        = {
@@ -192,10 +297,69 @@
     }
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
-    new Chart(donutChartCanvas, {
+    new Chart(donutCamChartCanvas, {
       type: 'doughnut',
       data: donutData,
-      options: donutOptions
+      options: donutOptions,
+      display: true
+    })
+
+
+    //-------------
+    //- DONUT ERROR CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutErrorChartCanvas = $('#donutErrorChart').get(0).getContext('2d')
+    var error_type_id_1_cnt =  {{ Js::from($error_type_id_1_cnt) }};
+    var error_type_id_2_cnt =  {{ Js::from($error_type_id_2_cnt) }};
+    var error_type_id_3_cnt =  {{ Js::from($error_type_id_3_cnt) }};
+    var error_type_id_4_cnt =  {{ Js::from($error_type_id_4_cnt) }};
+    var error_type_id_5_cnt =  {{ Js::from($error_type_id_5_cnt) }};
+    var error_type_id_6_cnt =  {{ Js::from($error_type_id_6_cnt) }};
+    var error_type_id_7_cnt =  {{ Js::from($error_type_id_7_cnt) }};
+
+    var error_type_id_1_name = {{ Js::from($error_type_id_1_name) }};
+    var error_type_id_2_name = {{ Js::from($error_type_id_2_name) }};
+    var error_type_id_3_name = {{ Js::from($error_type_id_3_name) }};
+    var error_type_id_4_name = {{ Js::from($error_type_id_4_name) }};
+    var error_type_id_5_name = {{ Js::from($error_type_id_5_name) }};
+    var error_type_id_6_name = {{ Js::from($error_type_id_6_name) }};
+    var error_type_id_7_name = {{ Js::from($error_type_id_7_name) }};
+    var donutData        = {
+      labels: [
+        error_type_id_1_name,
+        error_type_id_2_name,
+        error_type_id_3_name,
+        error_type_id_4_name,
+        error_type_id_5_name,
+        error_type_id_6_name,
+        error_type_id_7_name,
+      ],
+      datasets: [
+        {
+          data: [
+            error_type_id_1_cnt,
+            error_type_id_2_cnt,
+            error_type_id_3_cnt,
+            error_type_id_4_cnt,
+            error_type_id_5_cnt,
+            error_type_id_6_cnt,
+            error_type_id_7_cnt,
+        ],
+          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#02fc4d'],
+        }
+      ]
+    }
+    var donutOptions     = {
+      maintainAspectRatio : false,
+      responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    new Chart(donutErrorChartCanvas, {
+      type: 'doughnut',
+      data: donutData,
+      options: donutOptions,
     })
 
   </script>
