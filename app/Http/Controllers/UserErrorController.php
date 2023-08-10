@@ -153,7 +153,9 @@ class UserErrorController extends Controller
 
     public function anyData()
     {
-        $errors = Error::with('device')->with('type')->select(['id', 'device_id', 'type_id', 'cause', 'solution', 'detection_time', 'recovery_time'])->get();
+        $farm_id = Auth::user()->farm_id;
+        $my_device_ids = Device::where('farm_id', $farm_id)->pluck('id')->toArray();
+        $errors = Error::whereIn('device_id', $my_device_ids)->with('device')->with('type')->select(['id', 'device_id', 'type_id', 'cause', 'solution', 'detection_time', 'recovery_time'])->get();
         return Datatables::of($errors)
             ->addIndexColumn()
             ->editColumn('device', function ($errors) {
