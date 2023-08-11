@@ -269,7 +269,7 @@
             {data: 'recovery_time', name: 'recovery_time'},
             {data: 'type', name: 'type'},
        ]
-      }).buttons().container().appendTo('#devices-table_wrapper .col-md-6:eq(0)');
+      }).buttons().container().appendTo('#errors-table_wrapper .col-md-6:eq(0)');
     });
 
     //-------------
