@@ -1,5 +1,5 @@
 @section('title')
-{{ 'Tất cả danh mục thiết bị' }}
+{{ 'Tất cả loại thiết bị' }}
 @endsection
 @push('styles')
   <!-- DataTables -->
@@ -17,12 +17,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Tất cả danh mục thiết bị</h1>
+          <h1 class="m-0">Tất cả loại thiết bị</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Trang chủ</a></li>
-            <li class="breadcrumb-item active">Danh mục thiết bị</li>
+            <li class="breadcrumb-item active">Loại thiết bị</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->

@@ -1,5 +1,5 @@
 @section('title')
-{{ 'Sửa danh mục thiết bị' }}
+{{ 'Sửa loại thiết bị' }}
 @endsection
 
 @extends('layouts.base')
@@ -10,12 +10,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Sửa danh mục thiết bị</h1>
+            <h1 class="m-0">Sửa loại thiết bị</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('admin.device_categories.index') }}">Tất cả danh mục thiết bị</a></li>
-              <li class="breadcrumb-item active">Sửa danh mục</li>
+              <li class="breadcrumb-item"><a href="{{ route('admin.device_categories.index') }}">Tất cả loại thiết bị</a></li>
+              <li class="breadcrumb-item active">Sửa loại thiết bị</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->

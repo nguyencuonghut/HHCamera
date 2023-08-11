@@ -133,7 +133,7 @@
             <a href="{{route('admin.device_categories.index')}}" class="nav-link {{ Request::is('admin/device_categories*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-tags"></i>
               <p>
-                Danh mục thiết bị
+                Loại thiết bị
               </p>
             </a>
           </li>
