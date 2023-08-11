@@ -155,7 +155,7 @@ class UserErrorController extends Controller
     {
         $farm_id = Auth::user()->farm_id;
         $my_device_ids = Device::where('farm_id', $farm_id)->pluck('id')->toArray();
-        $errors = Error::whereIn('device_id', $my_device_ids)->with('device')->with('type')->select(['id', 'device_id', 'type_id', 'cause', 'solution', 'detection_time', 'recovery_time'])->get();
+        $errors = Error::whereIn('device_id', $my_device_ids)->with('device')->with('type')->orderBy('id', 'desc')->select(['id', 'device_id', 'type_id', 'cause', 'solution', 'detection_time', 'recovery_time'])->get();
         return Datatables::of($errors)
             ->addIndexColumn()
             ->editColumn('device', function ($errors) {
@@ -193,7 +193,7 @@ class UserErrorController extends Controller
 
     public function deviceData($device_id)
     {
-        $errors = Error::where('device_id', $device_id)->with('device')->with('type')->select(['id', 'device_id', 'type_id', 'cause', 'solution', 'detection_time', 'recovery_time'])->get();
+        $errors = Error::where('device_id', $device_id)->with('device')->with('type')->orderBy('id', 'desc')->select(['id', 'device_id', 'type_id', 'cause', 'solution', 'detection_time', 'recovery_time'])->get();
 
         return Datatables::of($errors)
             ->addIndexColumn()
@@ -223,6 +223,38 @@ class UserErrorController extends Controller
                 return $action;
             })
             ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    public function farmData($farm_id)
+    {
+        $farm_device_ids = Device::where('farm_id', $farm_id)->pluck('id')->toArray();
+        $errors = Error::whereIn('device_id', $farm_device_ids)->with('device')->with('type')->orderBy('id', 'desc')->select(['id', 'device_id', 'type_id', 'cause', 'solution', 'detection_time', 'recovery_time', 'updated_at'])->get();
+
+        return Datatables::of($errors)
+            ->addIndexColumn()
+            ->editColumn('updated_at', function ($errors) {
+                return date('d/m/Y H:i',strtotime($errors->updated_at));
+            })
+            ->editColumn('device', function ($errors) {
+                return '<a href="'.route('devices.show', $errors->device->id).'">'.$errors->device->name.'</a>';
+            })
+            ->editColumn('type', function ($errors) {
+                return $errors->type->name;
+            })
+            ->editColumn('cause', function ($errors) {
+                return $errors->cause;
+            })
+            ->editColumn('solution', function ($errors) {
+                return $errors->solution;
+            })
+            ->editColumn('detection_time', function ($errors) {
+                return $errors->detection_time;
+            })
+            ->editColumn('recovery_time', function ($errors) {
+                return $errors->recovery_time;
+            })
+            ->rawColumns(['device'])
             ->make(true);
     }
 }

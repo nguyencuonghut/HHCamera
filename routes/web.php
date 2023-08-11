@@ -71,6 +71,9 @@ Route::get('/logout', [UserLoginController::class, 'logout'])->name('user.logout
 
 Route::group(['middleware'=>'auth:web'], function() {
     Route::get('/', [UserHomeController::class, 'index'])->name('user.home');
+    Route::get('/profile', [UserHomeController::class, 'profile'])->name('user.profile');
+    Route::get('/change-password', [UserHomeController::class, 'showChangePasswordForm'])->name('user.change.password.get');
+    Route::post('/change-password', [UserHomeController::class, 'submitChangePasswordForm'])->name('user.change.password.post');
 
     Route::get('devices/data', [UserDeviceController::class, 'anyData'])->name('devices.data');
     Route::resource('devices', UserDeviceController::class);
@@ -79,6 +82,7 @@ Route::group(['middleware'=>'auth:web'], function() {
 
     Route::get('errors/data', [UserErrorController::class, 'anyData'])->name('errors.data');
     Route::get('errors/deviceData/{device_id}', [UserErrorController::class, 'deviceData'])->name('errors.deviceData');
+    Route::get('errors/farmData/{farm_id}', [UserErrorController::class, 'farmData'])->name('errors.farmData');
     Route::resource('errors', UserErrorController::class);
 
 });

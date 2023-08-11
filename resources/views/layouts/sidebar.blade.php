@@ -67,7 +67,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link {{ Request::is('profile*') ? 'active' : '' }}">
+            <a href="{{route('user.profile')}}" class="nav-link {{ Request::is('profile*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-id-card"></i>
               <p>
                 Hồ sơ của tôi
