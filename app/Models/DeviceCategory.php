@@ -15,4 +15,9 @@ class DeviceCategory extends Model
     {
         return $this->hasMany(Device::class);
     }
+
+    public function device_logs()
+    {
+        return $this->hasMany(DeviceLog::class);
+    }
 }

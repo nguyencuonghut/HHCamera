@@ -34,9 +34,14 @@
   <section class="content">
     <div class="container-fluid">
       <!-- Small boxes (Stat box) -->
+      @if($device->errors->count())
       <div class="row">
         <div class="col-12">
             <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Lịch sử lỗi</h5>
+                </div>
+
               <div class="card-body">
                 <table id="errors-table" class="table table-bordered table-striped">
                     <thead>
@@ -55,6 +60,32 @@
         </div>
       </div>
       <!-- /.row (main row) -->
+      @endif
+
+      <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Nhật ký thiết bị</h5>
+                </div>
+
+              <div class="card-body">
+                <table id="device-logs-table" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Thiết bị</th>
+                      <th>Hoạt động</th>
+                      <th>Trạng thái cũ</th>
+                      <th>Trạng thái mới</th>
+                      <th>Thời gian</th>
+                    </tr>
+                    </thead>
+                  </table>
+              </div>
+            </div>
+        </div>
+      </div>
     </div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
@@ -146,6 +177,68 @@
             {data: 'type', name: 'type'},
        ]
       }).buttons().container().appendTo('#error-table_wrapper .col-md-6:eq(0)');
+    });
+
+
+    $(function () {
+      $("#device-logs-table").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        buttons: [
+            {
+                extend: 'copy',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5],
+                }
+            },
+            {
+                extend: 'csv',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5],
+                }
+
+            },
+            {
+                extend: 'excel',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5],
+                }
+            },
+            {
+                extend: 'pdf',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5],
+                }
+            },
+            {
+                extend: 'print',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5],
+                }
+            },
+            {
+                extend: 'colvis',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5],
+                }
+            }
+        ],
+        dom: 'Blfrtip',
+        ajax: ' {!! route('admin.device_logs.deviceData', $device->id) !!}',
+        columns: [
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'device', name: 'device'},
+            {data: 'action', name: 'action'},
+            {data: 'old_status', name: 'old_status'},
+            {data: 'new_status', name: 'status'},
+            {data: 'created_at', name: 'created_at'},
+       ]
+      }).buttons().container().appendTo('#device-logs-table_wrapper .col-md-6:eq(0)');
     });
   </script>
 @endpush

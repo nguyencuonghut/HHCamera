@@ -26,4 +26,9 @@ class Device extends Model
         return $this->hasMany(Error::class);
     }
 
+    public function device_logs()
+    {
+        return $this->hasMany(DeviceLog::class);
+    }
+
 }

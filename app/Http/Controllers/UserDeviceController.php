@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Device;
 use App\Models\DeviceCategory;
+use App\Models\DeviceLog;
 use App\Models\Farm;
 use Datatables;
 use Illuminate\Http\Request;
@@ -81,6 +82,14 @@ class UserDeviceController extends Controller
         $device->device_category_id = $request->device_category_id;
         $device->save();
 
+        // Create Device Log
+        $device_log = new DeviceLog();
+        $device_log->device_id = $device->id;
+        $device_log->action = 'CREATE';
+        $device_log->new_status = $device->status;
+        $device_log->new_category_id = $device->device_category->id;
+        $device_log->save();
+
         Alert::toast('Tạo thiết bị mới thành công!', 'success', 'top-right');
         return redirect()->route('devices.index');
     }
@@ -148,6 +157,9 @@ class UserDeviceController extends Controller
         $request->validate($rules,$messages);
 
         $device = Device::findOrFail($id);
+        $old_status = $device->status;
+        $old_category_id = $device->device_category->id;
+
         $device->name = $request->name;
         $device->position = $request->position;
         $device->ip = $request->ip;
@@ -155,6 +167,16 @@ class UserDeviceController extends Controller
         $device->farm_id = $request->farm_id;
         $device->device_category_id = $request->device_category_id;
         $device->save();
+
+        // Create Device Log
+        $device_log = new DeviceLog();
+        $device_log->device_id = $device->id;
+        $device_log->action = 'EDIT';
+        $device_log->old_status = $old_status;
+        $device_log->new_status = $device->status;
+        $device_log->old_category_id = $old_category_id;
+        $device_log->new_category_id = $device->device_category_id;
+        $device_log->save();
 
         Alert::toast('Sửa thiết bị thành công!', 'success', 'top-right');
         return redirect()->route('devices.index');
@@ -169,7 +191,18 @@ class UserDeviceController extends Controller
     public function destroy($id)
     {
         $device = Device::findOrFail($id);
+
+        // Create Device Log
+        $device_log = new DeviceLog();
+        $device_log->device_id = $device->id;
+        $device_log->action = 'DESTROY';
+        $device_log->old_status = $device->status;
+        $device_log->old_category_id = $device->device_category->id;
+        $device_log->save();
+
+        // Destroy device
         $device->destroy($id);
+
         Alert::toast('Xóa thiết bị thành công!', 'success', 'top-right');
         return redirect()->route('devices.index');
     }
@@ -208,6 +241,8 @@ class UserDeviceController extends Controller
             })
             ->addColumn('action', function ($devices) {
                 $action = '';
+                $action = $action . ' <a href="' . route("devices.getChangeStatus", $devices->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-random"></i></a>';
+
                 $action = $action . ' <a href="' . route("devices.edit", $devices->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-pen"></i></a>';
 
                 $action = $action . '<form style="display:inline" action="'. route("devices.destroy", $devices->id) . '" method="POST">
@@ -231,10 +266,22 @@ class UserDeviceController extends Controller
     public function postChangeStatus(Request $request, $id)
     {
         $device = Device::findOrFail($id);
+        $old_status = $device->status;
+        $old_category_id = $device->device_category->id;
         if($device->status != $request->status) {
             // Update status
             $device->status = $request->status;
             $device->save();
+
+            // Create Device Log
+            $device_log = new DeviceLog();
+            $device_log->device_id = $device->id;
+            $device_log->action = 'CHANGE_STATUS';
+            $device_log->old_status = $old_status;
+            $device_log->new_status = $device->status;
+            $device_log->old_category_id = $old_category_id;
+            $device_log->new_category_id = $device->device_category->id;
+            $device_log->save();
 
             Alert::toast('Đổi trạng thái thành công!', 'success', 'top-right');
             return redirect()->route('devices.index');
