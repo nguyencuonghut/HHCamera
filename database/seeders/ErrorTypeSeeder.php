@@ -56,13 +56,27 @@ class ErrorTypeSeeder extends Seeder
             5 =>
                 array (
                     'id' => 6,
-                    'name' => 'Lỗi do nhà SX',
+                    'name' => 'Lỗi thiết bị',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             6 =>
                 array (
                     'id' => 7,
+                    'name' => 'Mất điện',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            7 =>
+                array (
+                    'id' => 8,
+                    'name' => 'Chập điện',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            8 =>
+                array (
+                    'id' => 9,
                     'name' => 'Lỗi khác',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
