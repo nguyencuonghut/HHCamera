@@ -53,6 +53,13 @@ class FarmSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            5 =>
+                array (
+                    'id' => 6,
+                    'name' => 'Trại Tiến Đức',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
         ));
     }
 }

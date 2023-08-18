@@ -18,7 +18,7 @@ class CreateDevicesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('position');
-            $table->string('ip');
+            $table->string('ip')->nullable();
             $table->enum('status', ['ON', 'OFF']);
             $table->bigInteger('device_category_id')->unsigned();
             $table->foreign('device_category_id')->references('id')->on('device_categories')->onDelete('cascade');

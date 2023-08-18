@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             DeviceCategorySeeder::class,
             DeviceSeeder::class,
             ErrorTypeSeeder::class,
+            ErrorSeeder::class,
+            DeviceLogSeeder::class
         ]);
     }
 }
