@@ -18,9 +18,9 @@ class AdminHomeController extends Controller
         $farms_cnt = Farm::count();
         $devices_cnt = Device::count();
         $errors_cnt = Error::count();
-        $cams_cnt = Device::where('device_category_id', 1)->count();
-        $cam_on_cnt = Device::where('device_category_id', 1)->where('status', 'ON')->count();
-        $cam_off_cnt = Device::where('device_category_id', 1)->where('status', 'OFF')->count();
+        $cams_cnt = Device::where('device_category_id', 2)->count();
+        $cam_on_cnt = Device::where('device_category_id', 2)->where('status', 'ON')->count();
+        $cam_off_cnt = Device::where('device_category_id', 2)->where('status', 'OFF')->count();
 
 
         $error_type_id_1_cnt = Error::where('type_id', 1)->count();
