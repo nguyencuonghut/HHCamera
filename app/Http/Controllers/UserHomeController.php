@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Device;
 use App\Models\Error;
+use App\Models\ErrorType;
 use App\Models\User;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -13,7 +15,70 @@ class UserHomeController extends Controller
 {
     public function index()
     {
-        return view('user.home');
+        $farm_id = Auth::user()->farm_id;
+        $my_device_ids = Device::where('farm_id', $farm_id)->pluck('id')->toArray();
+
+        $errors_cnt = Error::whereIn('device_id', $my_device_ids)->count();
+        $cams_cnt = Device::where('farm_id', $farm_id)->where('device_category_id', 1)->count();
+        $cam_on_cnt = Device::where('farm_id', $farm_id)->where('device_category_id', 1)->where('status', 'ON')->count();
+        $cam_off_cnt = Device::where('farm_id', $farm_id)->where('device_category_id', 1)->where('status', 'OFF')->count();
+
+
+        $error_type_id_1_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 1)->count();
+        $error_type_id_2_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 2)->count();
+        $error_type_id_3_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 3)->count();
+        $error_type_id_4_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 4)->count();
+        $error_type_id_5_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 5)->count();
+        $error_type_id_6_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 6)->count();
+        $error_type_id_7_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 7)->count();
+
+        $error_type_id_1_name = ErrorType::findOrFail(1)->name;
+        $error_type_id_2_name = ErrorType::findOrFail(2)->name;
+        $error_type_id_3_name = ErrorType::findOrFail(3)->name;
+        $error_type_id_4_name = ErrorType::findOrFail(4)->name;
+        $error_type_id_5_name = ErrorType::findOrFail(5)->name;
+        $error_type_id_6_name = ErrorType::findOrFail(6)->name;
+        $error_type_id_7_name = ErrorType::findOrFail(7)->name;
+
+
+        $today = today();
+        $startDate = today()->subdays(30);
+        $period = CarbonPeriod::create($startDate, $today);
+        $datasheet = [];
+        // Iterate over the errors
+        foreach ($period as $date) {
+            $datasheet[$date->format('d/m/Y')] = [];
+            $datasheet[$date->format('d/m/Y')] = [];
+            $datasheet[$date->format('d/m/Y')]["error"] = 0;
+        }
+        $errors = Error::whereBetween('created_at', [$startDate, now()])->whereIn('device_id', $my_device_ids)->get();
+        foreach ($errors as $error) {
+            $datasheet[$error->created_at->format('d/m/Y')]["error"]++;
+        }
+        //dd($datasheet);
+
+        return view('user.home',
+                    [
+                        'errors_cnt' => $errors_cnt,
+                        'cams_cnt' => $cams_cnt,
+                        'cam_on_cnt' => $cam_on_cnt,
+                        'cam_off_cnt' => $cam_off_cnt,
+                        'error_type_id_1_cnt' => $error_type_id_1_cnt,
+                        'error_type_id_2_cnt' => $error_type_id_2_cnt,
+                        'error_type_id_3_cnt' => $error_type_id_3_cnt,
+                        'error_type_id_4_cnt' => $error_type_id_4_cnt,
+                        'error_type_id_5_cnt' => $error_type_id_5_cnt,
+                        'error_type_id_6_cnt' => $error_type_id_6_cnt,
+                        'error_type_id_7_cnt' => $error_type_id_7_cnt,
+                        'error_type_id_1_name' => $error_type_id_1_name,
+                        'error_type_id_2_name' => $error_type_id_2_name,
+                        'error_type_id_3_name' => $error_type_id_3_name,
+                        'error_type_id_4_name' => $error_type_id_4_name,
+                        'error_type_id_5_name' => $error_type_id_5_name,
+                        'error_type_id_6_name' => $error_type_id_6_name,
+                        'error_type_id_7_name' => $error_type_id_7_name,
+                        'datasheet' => $datasheet,
+                    ]);
     }
 
     public function profile()
