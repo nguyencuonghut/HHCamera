@@ -125,6 +125,7 @@
 <script>$(function () {
     $("#errors-table").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
+      /*
       buttons: [
           {
               extend: 'copy',
@@ -171,6 +172,7 @@
           }
       ],
       dom: 'Blfrtip',
+      */
       ajax: ' {!! route('errors.farmData', $farm_id) !!}',
       columns: [
           {data: 'DT_RowIndex', name: 'DT_RowIndex'},

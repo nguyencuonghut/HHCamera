@@ -110,6 +110,7 @@
     $(function () {
       $("#devices-table").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,
+        /*
         buttons: [
             {
                 extend: 'copy',
@@ -156,6 +157,7 @@
             }
         ],
         dom: 'Blfrtip',
+        */
         ajax: ' {!! route('devices.data') !!}',
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
