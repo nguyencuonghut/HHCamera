@@ -95,7 +95,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">
-                            <b style="color:##212529;">TỔNG HỢP CAMERA</b>
+                            TỔNG HỢP CAMERA
                             <span class="badge bg-success">ON</span> {{$cam_on_cnt}}
                             &nbsp;
                             <span class="badge bg-danger">OFF</span> {{$cam_off_cnt}}
@@ -111,7 +111,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">
-                            <b style="color:##212529;">TỔNG HỢP LỖI</b>
+                            TỔNG HỢP LỖI
                         </h5>
                     </div>
 
@@ -120,7 +120,32 @@
                     </div>
                 </div>
             </div>
-          </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- AREA CHART -->
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">LỖI GẦN ĐÂY</h3>
+
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart">
+                      <canvas id="areaChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
@@ -221,6 +246,67 @@
       type: 'doughnut',
       data: donutData,
       options: donutOptions,
+    })
+
+    //--------------
+    //- AREA CHART -
+    //--------------
+
+    // Get context with jQuery - using jQuery's .get() method.
+    var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
+
+    var datasheet =  {{ Js::from($datasheet) }};
+    let labels = [];
+    let data = [];
+    for(const key in datasheet) {
+        labels.push(key);
+        data.push(datasheet[key].error);
+    }
+    //console.log(datasheet['11/07/2023']);
+    //console.log(data);
+    var areaChartData = {
+      //labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: labels,
+      datasets: [
+        {
+          label               : 'Lỗi thiết bị',
+          backgroundColor     : 'rgb(245, 105,84)',
+          borderColor         : 'rgba(245,105,84,0.8)',
+          pointRadius          : false,
+          pointColor          : 'rgb(245,105,84)',
+          pointStrokeColor    : 'rgba(245,105,84,1)',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(245,105,84,1)',
+          data                : data
+        },
+      ]
+    }
+
+    var areaChartOptions = {
+      maintainAspectRatio : false,
+      responsive : true,
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [{
+          gridLines : {
+            display : false,
+          }
+        }],
+        yAxes: [{
+          gridLines : {
+            display : false,
+          }
+        }]
+      }
+    }
+
+    // This will get the first returned node in the jQuery collection.
+    new Chart(areaChartCanvas, {
+      type: 'line',
+      data: areaChartData,
+      options: areaChartOptions
     })
 
   </script>

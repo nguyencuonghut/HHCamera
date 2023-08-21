@@ -7,6 +7,7 @@ use App\Models\Device;
 use App\Models\Error;
 use App\Models\ErrorType;
 use App\Models\Farm;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -38,6 +39,24 @@ class AdminHomeController extends Controller
         $error_type_id_5_name = ErrorType::findOrFail(5)->name;
         $error_type_id_6_name = ErrorType::findOrFail(6)->name;
         $error_type_id_7_name = ErrorType::findOrFail(7)->name;
+
+
+        $today = today();
+        $startDate = today()->subdays(30);
+        $period = CarbonPeriod::create($startDate, $today);
+        $datasheet = [];
+        // Iterate over the errors
+        foreach ($period as $date) {
+            $datasheet[$date->format('d/m/Y')] = [];
+            $datasheet[$date->format('d/m/Y')] = [];
+            $datasheet[$date->format('d/m/Y')]["error"] = 0;
+        }
+        $errors = Error::whereBetween('created_at', [$startDate, now()])->get();
+        foreach ($errors as $error) {
+            $datasheet[$error->created_at->format('d/m/Y')]["error"]++;
+        }
+        //dd($datasheet);
+
         return view('admin.home',
                     [
                         'farms_cnt' => $farms_cnt,
@@ -60,6 +79,7 @@ class AdminHomeController extends Controller
                         'error_type_id_5_name' => $error_type_id_5_name,
                         'error_type_id_6_name' => $error_type_id_6_name,
                         'error_type_id_7_name' => $error_type_id_7_name,
+                        'datasheet' => $datasheet,
                     ]);
     }
 
