@@ -14,6 +14,7 @@ use App\Http\Controllers\UserDeviceController;
 use App\Http\Controllers\UserErrorController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
+use App\Http\Controllers\UserPhotoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -92,4 +93,6 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('errors/farmData/{farm_id}', [UserErrorController::class, 'farmData'])->name('errors.farmData');
     Route::resource('errors', UserErrorController::class);
 
+    Route::get('photos/data', [UserPhotoController::class, 'anyData'])->name('photos.data');
+    Route::resource('photos', UserPhotoController::class);
 });

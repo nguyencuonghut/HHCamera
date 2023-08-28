@@ -76,6 +76,15 @@
           </li>
 
           <li class="nav-item">
+            <a href="{{route('photos.index')}}" class="nav-link {{ Request::is('photos*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-tasks"></i>
+              <p>
+                Báo cáo ảnh
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
             <a href="{{route('user.profile')}}" class="nav-link {{ Request::is('profile*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-id-card"></i>
               <p>
