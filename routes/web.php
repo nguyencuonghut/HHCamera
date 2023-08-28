@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminErrorTypeController;
 use App\Http\Controllers\AdminFarmController;
 use App\Http\Controllers\AdminHomeController;
 use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\AdminPhotoController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\UserDeviceController;
 use App\Http\Controllers\UserErrorController;
@@ -67,6 +68,9 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('errors/deviceData/{device_id}', [AdminErrorController::class, 'deviceData'])->name('errors.deviceData');
 
         Route::get('device_logs/deviceData/{device_id}', [AdminDeviceLogController::class, 'deviceData'])->name('device_logs.deviceData');
+
+        Route::get('photos', [AdminPhotoController::class, 'index'])->name('photos.index');
+        Route::get('photos/data', [AdminPhotoController::class, 'anyData'])->name('photos.data');
     });
 });
 

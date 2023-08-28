@@ -21,7 +21,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('user.home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Trang chủ</a></li>
             <li class="breadcrumb-item active">Ảnh</li>
           </ol>
         </div><!-- /.col -->
@@ -39,14 +39,13 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <a href="{{ route('photos.create') }}" class="btn btn-success">Tạo mới</a>
                 <table id="photos-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>STT</th>
+                    <th>Trại</th>
                     <th>Ảnh</th>
                     <th>Thời gian</th>
-                    <th>Thao tác</th>
                   </tr>
                   </thead>
                 </table>
@@ -95,14 +94,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
 
             },
@@ -110,39 +109,39 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             }
         ],
         dom: 'Blfrtip',
         */
-        ajax: ' {!! route('photos.data') !!}',
+        ajax: ' {!! route('admin.photos.data') !!}',
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'farm', name: 'farm'},
             {data: 'names', name: 'names'},
             {data: 'created_at', name: 'created_at'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
        ]
       }).buttons().container().appendTo('#photos-table_wrapper .col-md-6:eq(0)');
     });

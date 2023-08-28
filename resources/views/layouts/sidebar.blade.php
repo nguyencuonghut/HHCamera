@@ -31,6 +31,15 @@
           </li>
 
           <li class="nav-item">
+            <a href="{{route('admin.photos.index')}}" class="nav-link {{ Request::is('admin/photos*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-tasks"></i>
+              <p>
+                Báo cáo ảnh
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
             <a href="{{route('admin.devices.index')}}" class="nav-link {{ Request::is('admin/devices*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-th-list"></i>
               <p>

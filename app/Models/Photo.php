@@ -10,4 +10,9 @@ class Photo extends Model
     use HasFactory;
 
     protected $fillabe = ['user_id', 'names'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
