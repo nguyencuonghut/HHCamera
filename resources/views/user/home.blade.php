@@ -61,11 +61,11 @@
         </div>
         <!-- /.row -->
         <div class="row">
-            <div class="col-6">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">
-                            TỔNG HỢP CAMERA
+                            CAM
                             <span class="badge bg-success">ON</span> {{$cam_on_cnt}}
                             &nbsp;
                             <span class="badge bg-danger">OFF</span> {{$cam_off_cnt}}
@@ -77,11 +77,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+        </div>
+
+        <div class="row">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">
-                            TỔNG HỢP LỖI
+                            LỖI
                         </h5>
                     </div>
 
@@ -173,6 +176,8 @@
     var error_type_id_5_cnt =  {{ Js::from($error_type_id_5_cnt) }};
     var error_type_id_6_cnt =  {{ Js::from($error_type_id_6_cnt) }};
     var error_type_id_7_cnt =  {{ Js::from($error_type_id_7_cnt) }};
+    var error_type_id_8_cnt =  {{ Js::from($error_type_id_8_cnt) }};
+    var error_type_id_9_cnt =  {{ Js::from($error_type_id_9_cnt) }};
 
     var error_type_id_1_name = {{ Js::from($error_type_id_1_name) }};
     var error_type_id_2_name = {{ Js::from($error_type_id_2_name) }};
@@ -181,6 +186,8 @@
     var error_type_id_5_name = {{ Js::from($error_type_id_5_name) }};
     var error_type_id_6_name = {{ Js::from($error_type_id_6_name) }};
     var error_type_id_7_name = {{ Js::from($error_type_id_7_name) }};
+    var error_type_id_8_name = {{ Js::from($error_type_id_8_name) }};
+    var error_type_id_9_name = {{ Js::from($error_type_id_9_name) }};
     var donutData        = {
       labels: [
         error_type_id_1_name,
@@ -190,6 +197,8 @@
         error_type_id_5_name,
         error_type_id_6_name,
         error_type_id_7_name,
+        error_type_id_8_name,
+        error_type_id_9_name,
       ],
       datasets: [
         {
@@ -201,8 +210,10 @@
             error_type_id_5_cnt,
             error_type_id_6_cnt,
             error_type_id_7_cnt,
+            error_type_id_8_cnt,
+            error_type_id_9_cnt,
         ],
-          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#02fc4d'],
+          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#403A3A', '#02fc4d', '#75151E', '#924E7D'],
         }
       ]
     }

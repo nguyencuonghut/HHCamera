@@ -31,6 +31,8 @@ class UserHomeController extends Controller
         $error_type_id_5_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 5)->count();
         $error_type_id_6_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 6)->count();
         $error_type_id_7_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 7)->count();
+        $error_type_id_8_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 8)->count();
+        $error_type_id_9_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 9)->count();
 
         $error_type_id_1_name = ErrorType::findOrFail(1)->name;
         $error_type_id_2_name = ErrorType::findOrFail(2)->name;
@@ -39,6 +41,8 @@ class UserHomeController extends Controller
         $error_type_id_5_name = ErrorType::findOrFail(5)->name;
         $error_type_id_6_name = ErrorType::findOrFail(6)->name;
         $error_type_id_7_name = ErrorType::findOrFail(7)->name;
+        $error_type_id_8_name = ErrorType::findOrFail(8)->name;
+        $error_type_id_9_name = ErrorType::findOrFail(9)->name;
 
 
         $today = today();
@@ -70,6 +74,8 @@ class UserHomeController extends Controller
                         'error_type_id_5_cnt' => $error_type_id_5_cnt,
                         'error_type_id_6_cnt' => $error_type_id_6_cnt,
                         'error_type_id_7_cnt' => $error_type_id_7_cnt,
+                        'error_type_id_8_cnt' => $error_type_id_8_cnt,
+                        'error_type_id_9_cnt' => $error_type_id_9_cnt,
                         'error_type_id_1_name' => $error_type_id_1_name,
                         'error_type_id_2_name' => $error_type_id_2_name,
                         'error_type_id_3_name' => $error_type_id_3_name,
@@ -77,6 +83,8 @@ class UserHomeController extends Controller
                         'error_type_id_5_name' => $error_type_id_5_name,
                         'error_type_id_6_name' => $error_type_id_6_name,
                         'error_type_id_7_name' => $error_type_id_7_name,
+                        'error_type_id_8_name' => $error_type_id_8_name,
+                        'error_type_id_9_name' => $error_type_id_9_name,
                         'datasheet' => $datasheet,
                     ]);
     }
