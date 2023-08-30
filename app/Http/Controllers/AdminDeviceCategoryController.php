@@ -121,7 +121,7 @@ class AdminDeviceCategoryController extends Controller
 
     public function anyData()
     {
-        $device_categories = DeviceCategory::select(['id', 'name'])->get();
+        $device_categories = DeviceCategory::orderBy('id', 'desc')->select(['id', 'name'])->get();
         return Datatables::of($device_categories)
             ->addIndexColumn()
             ->editColumn('name', function ($device_categories) {

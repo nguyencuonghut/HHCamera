@@ -169,7 +169,7 @@ class AdminFarmController extends Controller
 
     public function anyData()
     {
-        $farms = Farm::select(['id', 'name'])->get();
+        $farms = Farm::orderBy('id', 'desc')->select(['id', 'name'])->get();
         return Datatables::of($farms)
             ->addIndexColumn()
             ->editColumn('name', function ($farms) {

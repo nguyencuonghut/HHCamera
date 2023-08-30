@@ -210,7 +210,7 @@ class UserDeviceController extends Controller
     public function anyData()
     {
         $farm_id = Auth::user()->farm_id;
-        $devices = Device::where('farm_id',  $farm_id)->with('farm')->with('device_category')->select(['id', 'name', 'position', 'ip', 'status', 'farm_id', 'device_category_id'])->get();
+        $devices = Device::where('farm_id',  $farm_id)->with('farm')->with('device_category')->orderBy('id', 'desc')->select(['id', 'name', 'position', 'ip', 'status', 'farm_id', 'device_category_id'])->get();
         return Datatables::of($devices)
             ->addIndexColumn()
             ->editColumn('name', function ($devices) {

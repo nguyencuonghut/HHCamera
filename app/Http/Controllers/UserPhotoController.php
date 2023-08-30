@@ -134,7 +134,7 @@ class UserPhotoController extends Controller
     public function anyData()
     {
         $user_id = Auth::user()->id;
-        $photos = Photo::where('user_id',  $user_id)->select(['id', 'user_id', 'names', 'created_at'])->get();
+        $photos = Photo::where('user_id',  $user_id)->orderBy('id', 'desc')->select(['id', 'user_id', 'names', 'created_at'])->get();
         return Datatables::of($photos)
             ->addIndexColumn()
             ->editColumn('names', function ($photos) {

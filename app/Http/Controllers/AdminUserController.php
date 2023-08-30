@@ -150,7 +150,7 @@ class AdminUserController extends Controller
 
     public function anyData()
     {
-        $users = User::with('farm')->select(['id', 'name', 'email', 'farm_id'])->get();
+        $users = User::with('farm')->orderBy('id', 'desc')->select(['id', 'name', 'email', 'farm_id'])->get();
         return Datatables::of($users)
             ->addIndexColumn()
             ->editColumn('name', function ($users) {

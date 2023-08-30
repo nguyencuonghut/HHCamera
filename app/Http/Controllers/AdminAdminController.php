@@ -142,7 +142,7 @@ class AdminAdminController extends Controller
 
     public function anyData()
     {
-        $admins = Admin::select(['id', 'name', 'email'])->get();
+        $admins = Admin::orderBy('id', 'desc')->select(['id', 'name', 'email'])->get();
         return Datatables::of($admins)
             ->addIndexColumn()
             ->editColumn('name', function ($admins) {

@@ -121,7 +121,7 @@ class AdminErrorTypeController extends Controller
 
     public function anyData()
     {
-        $error_types = ErrorType::orderBy('id')->select(['id', 'name'])->get();
+        $error_types = ErrorType::orderBy('id')->orderBy('id', 'desc')->select(['id', 'name'])->get();
         return Datatables::of($error_types)
             ->addIndexColumn()
             ->editColumn('name', function ($error_types) {

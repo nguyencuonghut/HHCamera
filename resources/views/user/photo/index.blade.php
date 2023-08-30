@@ -43,7 +43,6 @@
                 <table id="photos-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>STT</th>
                     <th>Ảnh</th>
                     <th>Thời gian</th>
                     <th>Thao tác</th>
@@ -139,7 +138,6 @@
         */
         ajax: ' {!! route('photos.data') !!}',
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'names', name: 'names'},
             {data: 'created_at', name: 'created_at'},
             {data: 'action', name: 'action', orderable: false, searchable: false},

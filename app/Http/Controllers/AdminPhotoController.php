@@ -14,7 +14,7 @@ class AdminPhotoController extends Controller
 
     public function anyData()
     {
-        $photos = Photo::with('user')->select(['id', 'user_id', 'names', 'created_at'])->get();
+        $photos = Photo::with('user')->orderBy('id', 'desc')->select(['id', 'user_id', 'names', 'created_at'])->get();
         return Datatables::of($photos)
             ->addIndexColumn()
             ->addColumn('farm', function ($photos) {

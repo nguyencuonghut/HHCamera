@@ -18,7 +18,7 @@ class AdminErrorController extends Controller
     public function anyData()
     {
         $my_device_ids = Device::pluck('id')->toArray();
-        $errors = Error::whereIn('device_id', $my_device_ids)->with('device')->with('type')->select(['id', 'device_id', 'type_id', 'cause', 'solution', 'detection_time', 'recovery_time'])->get();
+        $errors = Error::whereIn('device_id', $my_device_ids)->with('device')->with('type')->orderBy('id', 'desc')->select(['id', 'device_id', 'type_id', 'cause', 'solution', 'detection_time', 'recovery_time'])->get();
         return Datatables::of($errors)
             ->addIndexColumn()
             ->editColumn('farm', function ($errors) {
@@ -49,7 +49,7 @@ class AdminErrorController extends Controller
     public function farmData($farm_id)
     {
         $farm_device_ids = Device::where('farm_id', $farm_id)->pluck('id')->toArray();
-        $errors = Error::whereIn('device_id', $farm_device_ids)->with('device')->with('type')->select(['id', 'device_id', 'type_id', 'cause', 'solution', 'detection_time', 'recovery_time'])->get();
+        $errors = Error::whereIn('device_id', $farm_device_ids)->with('device')->with('type')->orderBy('id', 'desc')->select(['id', 'device_id', 'type_id', 'cause', 'solution', 'detection_time', 'recovery_time'])->get();
 
         return Datatables::of($errors)
             ->addIndexColumn()
