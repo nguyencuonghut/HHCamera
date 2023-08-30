@@ -47,6 +47,7 @@
                       <th>Thời gian phát hiện</th>
                       <th>Thời gian sửa xong</th>
                       <th>Phân loại</th>
+                      <th>Thao tác</th>
                     </tr>
                     </thead>
                   </table>
@@ -90,6 +91,7 @@
     $(function () {
       $("#errors-table").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,
+        /*
         buttons: [
             {
                 extend: 'copy',
@@ -136,6 +138,7 @@
             }
         ],
         dom: 'Blfrtip',
+        */
         ajax: ' {!! route('errors.deviceData', $device->id) !!}',
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},

@@ -62,10 +62,10 @@
                   <tr>
                     <th>STT</th>
                     <th>Tên</th>
-                    <th>Vị trí</th>
-                    <th>Địa chỉ IP</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
+                    <th>Vị trí</th>
+                    <th>Địa chỉ IP</th>
                   </tr>
                   </thead>
                 </table>
@@ -162,10 +162,10 @@
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'name', name: 'name'},
-            {data: 'position', name: 'position'},
-            {data: 'ip', name: 'ip'},
             {data: 'status', name: 'status'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
+            {data: 'position', name: 'position'},
+            {data: 'ip', name: 'ip'},
        ]
       }).buttons().container().appendTo('#devices-table_wrapper .col-md-6:eq(0)');
     });

@@ -68,7 +68,7 @@
                                     <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Thời gian cập nhật</th>
+                                        <th>Thời gian</th>
                                         <th>Tên thiết bị</th>
                                         <th>Nguyên nhân</th>
                                         <th>Biện pháp</th>
