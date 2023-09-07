@@ -88,7 +88,6 @@
     $(function () {
       $("#photos-table").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,
-        /*
         buttons: [
             {
                 extend: 'copy',
@@ -135,7 +134,6 @@
             }
         ],
         dom: 'Blfrtip',
-        */
         ajax: ' {!! route('admin.photos.data') !!}',
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
