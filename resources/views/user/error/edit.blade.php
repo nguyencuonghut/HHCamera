@@ -76,7 +76,7 @@
                                 <div class="col-12">
                                     <label class="required-field">Thời gian phát hiện lỗi</label>
                                     <div class="input-group date" id="detection_time" name="detection_time" data-target-input="nearest">
-                                        <input @if (isset($error->detection_time)) value="{{Carbon\Carbon::parse($error->detection_time)->format('d/m/Y h:i:s')}}" @endif type="text" id="detection_time" name="detection_time" class="form-control datetimepicker-input" data-target="#detection_time"/>
+                                        <input @if (isset($error->detection_time)) value="{{Carbon\Carbon::parse($error->detection_time)->format('d/m/Y H:i:s')}}" @endif type="text" id="detection_time" name="detection_time" class="form-control datetimepicker-input" data-target="#detection_time"/>
                                         <div class="input-group-append" data-target="#detection_time" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
@@ -87,7 +87,7 @@
                                 <div class="col-12">
                                     <label>Thời gian phát khắc phục xong</label>
                                     <div class="input-group date" id="recovery_time" name="recovery_time" data-target-input="nearest">
-                                        <input @if (isset($error->recovery_time)) value="{{Carbon\Carbon::parse($error->recovery_time)->format('d/m/Y h:i:s')}}" @endif type="text" id="recovery_time" name="recovery_time" class="form-control datetimepicker-input" data-target="#recovery_time"/>
+                                        <input @if (isset($error->recovery_time)) value="{{Carbon\Carbon::parse($error->recovery_time)->format('d/m/Y H:i:s')}}" @endif type="text" id="recovery_time" name="recovery_time" class="form-control datetimepicker-input" data-target="#recovery_time"/>
                                         <div class="input-group-append" data-target="#recovery_time" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>

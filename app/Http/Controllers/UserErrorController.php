@@ -59,9 +59,9 @@ class UserErrorController extends Controller
         $error = new Error();
         $error->device_id = $request->device_id;
         $error->type_id = $request->type_id;
-        $error->detection_time = Carbon::parse($request->detection_time);
+        $error->detection_time = Carbon::createFromFormat('d/m/Y H:i:s', $request->detection_time);
         if($request->recovery_time) {
-            $error->recovery_time = Carbon::parse($request->recovery_time);
+            $error->recovery_time = Carbon::createFromFormat('d/m/Y H:i:s', $request->recovery_time);
         }
         $error->cause = $request->cause;
         $error->solution = $request->solution;
@@ -125,9 +125,9 @@ class UserErrorController extends Controller
         $error = Error::findOrFail($id);
         $error->device_id = $request->device_id;
         $error->type_id = $request->type_id;
-        $error->detection_time = Carbon::parse($request->detection_time);
+        $error->detection_time = Carbon::createFromFormat('d/m/Y H:i:s', $request->detection_time);
         if($request->recovery_time) {
-            $error->recovery_time = Carbon::parse($request->recovery_time);
+            $error->recovery_time = Carbon::createFromFormat('d/m/Y H:i:s', $request->recovery_time);
         }
         $error->cause = $request->cause;
         $error->solution = $request->solution;
