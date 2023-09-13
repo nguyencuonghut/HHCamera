@@ -59,6 +59,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <a href="{{ route('devices.create') }}" class="btn btn-success">Tạo mới</a>
+                <a href="{{ route('devices.getBulkAction') }}" class="btn btn-danger">Bật - Tắt</a>
                 <table id="devices-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>

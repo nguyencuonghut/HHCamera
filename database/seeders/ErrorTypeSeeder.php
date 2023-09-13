@@ -56,56 +56,56 @@ class ErrorTypeSeeder extends Seeder
             5 =>
                 array (
                     'id' => 6,
-                    'name' => 'Mất internet',
+                    'name' => 'Chập điện',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             6 =>
                 array (
                     'id' => 7,
-                    'name' => 'Mất điện',
+                    'name' => 'Lỗi camera',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             7 =>
                 array (
                     'id' => 8,
-                    'name' => 'Chập điện',
+                    'name' => 'Lỗi đầu ghi',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             8 =>
                 array (
                     'id' => 9,
-                    'name' => 'Tự ngắt hệ thống vì mưa/bão',
+                    'name' => 'Lỗi switch',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             9 =>
                 array (
                     'id' => 10,
-                    'name' => 'Lỗi camera',
+                    'name' => 'Lỗi khác',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             10 =>
                 array (
                     'id' => 11,
-                    'name' => 'Lỗi đầu ghi',
+                    'name' => 'Mất internet',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             11 =>
                 array (
                     'id' => 12,
-                    'name' => 'Lỗi switch',
+                    'name' => 'Mất điện',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             12 =>
                 array (
                     'id' => 13,
-                    'name' => 'Lỗi khác',
+                    'name' => 'Tự ngắt hệ thống vì mưa/bão',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),

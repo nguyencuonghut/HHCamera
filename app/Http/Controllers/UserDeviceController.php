@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Device;
 use App\Models\DeviceCategory;
 use App\Models\DeviceLog;
+use App\Models\ErrorType;
 use App\Models\Farm;
 use Datatables;
 use Illuminate\Http\Request;
@@ -290,5 +291,63 @@ class UserDeviceController extends Controller
             Alert::toast('Trạng thái thiết bị vẫn như cũ!', 'warning', 'top-right');
             return redirect()->route('devices.index');
         }
+    }
+
+    public function getBulkAction()
+    {
+        $error_types = ErrorType::orderBy('id', 'desc')->pluck('name', 'id');
+        return view('user.device.bulkAction', ['error_types' => $error_types]);
+    }
+
+    public function postBulkAction(Request $request)
+    {
+        $rules = [
+            'status' => 'required',
+        ];
+        $messages = [
+            'status.required' => 'Bạn phải nhập trạng thái.',
+        ];
+        $request->validate($rules,$messages);
+
+        //Check if user wants to turn off all devices
+        if('OFF' == $request->status){
+            //Need to input error type
+            if(NULL == $request->type_id){
+                Alert::toast('Bạn phải chọn loại lỗi!', 'error', 'top-right');
+                return redirect()->back();
+            }
+            $my_devices = Device::where('farm_id', Auth::user()->farm_id)->where('status', 'ON')->get();
+            foreach($my_devices as $device){
+                //Turn off all devices
+                $device->status = 'OFF';
+                $device->save();
+
+                // Create Device Log
+                $device_log = new DeviceLog();
+                $device_log->device_id = $device->id;
+                $device_log->action = 'CHANGE_STATUS';
+                $device_log->old_status = 'ON';
+                $device_log->new_status = 'OFF';
+                $device_log->save();
+            }
+        }else{
+            //Turn ON all devices
+            $my_devices = Device::where('farm_id', Auth::user()->farm_id)->where('status', 'OFF')->get();
+            foreach($my_devices as $device){
+                //Turn off all devices
+                $device->status = 'ON';
+                $device->save();
+
+                // Create Device Log
+                $device_log = new DeviceLog();
+                $device_log->device_id = $device->id;
+                $device_log->action = 'CHANGE_STATUS';
+                $device_log->old_status = 'OFF';
+                $device_log->new_status = 'ON';
+                $device_log->save();
+            }
+
+        }
+        return redirect()->route('devices.index');
     }
 }
