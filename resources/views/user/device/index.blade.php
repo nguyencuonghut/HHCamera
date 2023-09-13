@@ -36,6 +36,7 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-12">
+            <!--
             @if($cam_on_cnt || $cam_off_cnt)
             <div class="card">
                 <div class="card-header">
@@ -52,6 +53,7 @@
                 </div>
             </div>
             @endif
+            -->
 
             <div class="card">
               <!-- /.card-header -->
@@ -174,7 +176,7 @@
     //-------------
     //- DONUT CHART -
     //-------------
-    // Get context with jQuery - using jQuery's .get() method.
+    /*
     var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
     var cam_on_cnt =  {{ Js::from($cam_on_cnt) }};
     var cam_off_cnt =  {{ Js::from($cam_off_cnt) }};
@@ -194,13 +196,12 @@
       maintainAspectRatio : false,
       responsive : true,
     }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
+
     new Chart(donutChartCanvas, {
       type: 'doughnut',
       data: donutData,
       options: donutOptions
     })
-
+    */
   </script>
 @endpush
