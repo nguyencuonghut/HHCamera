@@ -26,7 +26,7 @@ class AdminPhotoController extends Controller
                 $html_photos = '';
                 foreach ($photo_names_array as $photo_name) {
                     $url= asset(('upload/images/') . $photo_name);
-                    $html_photos = $html_photos . '<img src="'.$url.'" border="0" width="100" height="100" class="img-rounded" align="center" />';
+                    $html_photos = $html_photos . '<a href="'.$url.'">' . '<img src="'.$url.'" border="0" width="100" height="100" class="img-rounded" align="center" />' . '</a>';
                 }
 
                 return $html_photos;
