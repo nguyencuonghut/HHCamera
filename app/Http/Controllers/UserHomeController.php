@@ -33,6 +33,10 @@ class UserHomeController extends Controller
         $error_type_id_7_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 7)->count();
         $error_type_id_8_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 8)->count();
         $error_type_id_9_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 9)->count();
+        $error_type_id_10_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 10)->count();
+        $error_type_id_11_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 11)->count();
+        $error_type_id_12_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 12)->count();
+        $error_type_id_13_cnt = Error::whereIn('device_id', $my_device_ids)->where('type_id', 13)->count();
 
         $error_type_id_1_name = ErrorType::findOrFail(1)->name;
         $error_type_id_2_name = ErrorType::findOrFail(2)->name;
@@ -43,6 +47,10 @@ class UserHomeController extends Controller
         $error_type_id_7_name = ErrorType::findOrFail(7)->name;
         $error_type_id_8_name = ErrorType::findOrFail(8)->name;
         $error_type_id_9_name = ErrorType::findOrFail(9)->name;
+        $error_type_id_10_name = ErrorType::findOrFail(10)->name;
+        $error_type_id_11_name = ErrorType::findOrFail(11)->name;
+        $error_type_id_12_name = ErrorType::findOrFail(12)->name;
+        $error_type_id_13_name = ErrorType::findOrFail(13)->name;
 
 
         $today = today();
@@ -76,6 +84,10 @@ class UserHomeController extends Controller
                         'error_type_id_7_cnt' => $error_type_id_7_cnt,
                         'error_type_id_8_cnt' => $error_type_id_8_cnt,
                         'error_type_id_9_cnt' => $error_type_id_9_cnt,
+                        'error_type_id_10_cnt' => $error_type_id_10_cnt,
+                        'error_type_id_11_cnt' => $error_type_id_11_cnt,
+                        'error_type_id_12_cnt' => $error_type_id_12_cnt,
+                        'error_type_id_13_cnt' => $error_type_id_13_cnt,
                         'error_type_id_1_name' => $error_type_id_1_name,
                         'error_type_id_2_name' => $error_type_id_2_name,
                         'error_type_id_3_name' => $error_type_id_3_name,
@@ -85,6 +97,10 @@ class UserHomeController extends Controller
                         'error_type_id_7_name' => $error_type_id_7_name,
                         'error_type_id_8_name' => $error_type_id_8_name,
                         'error_type_id_9_name' => $error_type_id_9_name,
+                        'error_type_id_10_name' => $error_type_id_10_name,
+                        'error_type_id_11_name' => $error_type_id_11_name,
+                        'error_type_id_12_name' => $error_type_id_12_name,
+                        'error_type_id_13_name' => $error_type_id_13_name,
                         'datasheet' => $datasheet,
                     ]);
     }

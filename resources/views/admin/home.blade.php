@@ -208,6 +208,10 @@
     var error_type_id_7_cnt =  {{ Js::from($error_type_id_7_cnt) }};
     var error_type_id_8_cnt =  {{ Js::from($error_type_id_8_cnt) }};
     var error_type_id_9_cnt =  {{ Js::from($error_type_id_9_cnt) }};
+    var error_type_id_10_cnt =  {{ Js::from($error_type_id_10_cnt) }};
+    var error_type_id_11_cnt =  {{ Js::from($error_type_id_11_cnt) }};
+    var error_type_id_12_cnt =  {{ Js::from($error_type_id_12_cnt) }};
+    var error_type_id_13_cnt =  {{ Js::from($error_type_id_13_cnt) }};
 
     var error_type_id_1_name = {{ Js::from($error_type_id_1_name) }};
     var error_type_id_2_name = {{ Js::from($error_type_id_2_name) }};
@@ -218,6 +222,10 @@
     var error_type_id_7_name = {{ Js::from($error_type_id_7_name) }};
     var error_type_id_8_name = {{ Js::from($error_type_id_8_name) }};
     var error_type_id_9_name = {{ Js::from($error_type_id_9_name) }};
+    var error_type_id_10_name = {{ Js::from($error_type_id_10_name) }};
+    var error_type_id_11_name = {{ Js::from($error_type_id_11_name) }};
+    var error_type_id_12_name = {{ Js::from($error_type_id_12_name) }};
+    var error_type_id_13_name = {{ Js::from($error_type_id_13_name) }};
     var donutData        = {
       labels: [
         error_type_id_1_name,
@@ -229,6 +237,10 @@
         error_type_id_7_name,
         error_type_id_8_name,
         error_type_id_9_name,
+        error_type_id_10_name,
+        error_type_id_11_name,
+        error_type_id_12_name,
+        error_type_id_13_name,
       ],
       datasets: [
         {
@@ -242,8 +254,12 @@
             error_type_id_7_cnt,
             error_type_id_8_cnt,
             error_type_id_9_cnt,
+            error_type_id_10_cnt,
+            error_type_id_11_cnt,
+            error_type_id_12_cnt,
+            error_type_id_13_cnt,
         ],
-          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#403A3A', '#02fc4d', '#75151E', '#924E7D'],
+          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#403A3A', '#02fc4d', '#75151E', '#924E7D', '#B1DBBB', '#B1782B', '#74BA8F', '#E4F33F'],
         }
       ]
     }

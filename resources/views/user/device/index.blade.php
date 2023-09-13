@@ -40,7 +40,7 @@
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title">
-                        <b style="color:#212529;">CAMERA:</b>
+                        CAMERA:
                         <span class="badge bg-success">ON</span> {{$cam_on_cnt}}
                         &nbsp;
                         <span class="badge bg-danger">OFF</span> {{$cam_off_cnt}}
