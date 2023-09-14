@@ -39,7 +39,7 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <a href="{{ route('admin.device_categories.create') }}" class="btn btn-success">Tạo mới danh mục</a>
+                <a href="{{ route('admin.device_categories.create') }}" class="btn btn-success">Tạo mới</a>
                 <table id="device_categories-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>

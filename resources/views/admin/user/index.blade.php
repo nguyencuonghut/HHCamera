@@ -39,7 +39,7 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <a href="{{ route('admin.users.create') }}" class="btn btn-success">Tạo mới người dùng</a>
+                <a href="{{ route('admin.users.create') }}" class="btn btn-success">Tạo mới</a>
                 <table id="users-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>
