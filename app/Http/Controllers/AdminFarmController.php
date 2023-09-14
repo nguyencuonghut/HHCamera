@@ -70,68 +70,7 @@ class AdminFarmController extends Controller
     public function show($id)
     {
         $farm = Farm::findOrFail($id);
-        $farm_cam_on_cnt = Device::where('device_category_id', 1)->where('farm_id', $farm->id)->where('status', "ON")->count();
-        $farm_cam_off_cnt = Device::where('device_category_id', 1)->where('farm_id', $farm->id)->where('status', "OFF")->count();
-
-        $farm_device_ids = Device::where('farm_id', $farm->id)->pluck('id')->toArray();
-        $error_type_id_1_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 1)->count();
-        $error_type_id_2_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 2)->count();
-        $error_type_id_3_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 3)->count();
-        $error_type_id_4_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 4)->count();
-        $error_type_id_5_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 5)->count();
-        $error_type_id_6_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 6)->count();
-        $error_type_id_7_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 7)->count();
-        $error_type_id_8_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 8)->count();
-        $error_type_id_9_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 9)->count();
-        $error_type_id_10_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 10)->count();
-        $error_type_id_11_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 11)->count();
-        $error_type_id_12_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 12)->count();
-        $error_type_id_13_cnt = Error::whereIN('device_id', $farm_device_ids)->where('type_id', 13)->count();
-
-        $error_type_id_1_name = ErrorType::findOrFail(1)->name;
-        $error_type_id_2_name = ErrorType::findOrFail(2)->name;
-        $error_type_id_3_name = ErrorType::findOrFail(3)->name;
-        $error_type_id_4_name = ErrorType::findOrFail(4)->name;
-        $error_type_id_5_name = ErrorType::findOrFail(5)->name;
-        $error_type_id_6_name = ErrorType::findOrFail(6)->name;
-        $error_type_id_7_name = ErrorType::findOrFail(7)->name;
-        $error_type_id_8_name = ErrorType::findOrFail(8)->name;
-        $error_type_id_9_name = ErrorType::findOrFail(9)->name;
-        $error_type_id_10_name = ErrorType::findOrFail(10)->name;
-        $error_type_id_11_name = ErrorType::findOrFail(11)->name;
-        $error_type_id_12_name = ErrorType::findOrFail(12)->name;
-        $error_type_id_13_name = ErrorType::findOrFail(13)->name;
-        return view('admin.farm.show',
-                    ['farm' => $farm,
-                    'farm_cam_on_cnt' => $farm_cam_on_cnt,
-                    'farm_cam_off_cnt' => $farm_cam_off_cnt,
-                    'error_type_id_1_cnt' => $error_type_id_1_cnt,
-                    'error_type_id_2_cnt' => $error_type_id_2_cnt,
-                    'error_type_id_3_cnt' => $error_type_id_3_cnt,
-                    'error_type_id_4_cnt' => $error_type_id_4_cnt,
-                    'error_type_id_5_cnt' => $error_type_id_5_cnt,
-                    'error_type_id_6_cnt' => $error_type_id_6_cnt,
-                    'error_type_id_7_cnt' => $error_type_id_7_cnt,
-                    'error_type_id_8_cnt' => $error_type_id_8_cnt,
-                    'error_type_id_9_cnt' => $error_type_id_9_cnt,
-                    'error_type_id_10_cnt' => $error_type_id_10_cnt,
-                    'error_type_id_11_cnt' => $error_type_id_11_cnt,
-                    'error_type_id_12_cnt' => $error_type_id_12_cnt,
-                    'error_type_id_13_cnt' => $error_type_id_13_cnt,
-                    'error_type_id_1_name' => $error_type_id_1_name,
-                    'error_type_id_2_name' => $error_type_id_2_name,
-                    'error_type_id_3_name' => $error_type_id_3_name,
-                    'error_type_id_4_name' => $error_type_id_4_name,
-                    'error_type_id_5_name' => $error_type_id_5_name,
-                    'error_type_id_6_name' => $error_type_id_6_name,
-                    'error_type_id_7_name' => $error_type_id_7_name,
-                    'error_type_id_8_name' => $error_type_id_8_name,
-                    'error_type_id_9_name' => $error_type_id_9_name,
-                    'error_type_id_10_name' => $error_type_id_10_name,
-                    'error_type_id_11_name' => $error_type_id_11_name,
-                    'error_type_id_12_name' => $error_type_id_12_name,
-                    'error_type_id_13_name' => $error_type_id_13_name,
-                    ]);
+        return view('admin.farm.show', ['farm' => $farm]);
     }
 
     /**

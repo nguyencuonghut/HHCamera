@@ -33,42 +33,6 @@
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
-      <!-- Small boxes (Stat box) -->
-      @if($farm_cam_on_cnt || $farm_cam_off_cnt)
-      <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">
-                        CAMERA
-                        <span class="badge bg-success">ON</span> {{$farm_cam_on_cnt}}
-                        &nbsp;
-                        <span class="badge bg-danger">OFF</span> {{$farm_cam_off_cnt}}
-                    </h5>
-                </div>
-
-                <div class="card-body">
-                <canvas id="donutCamChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                </div>
-            </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">
-                        LỖI
-                    </h5>
-                </div>
-
-                <div class="card-body">
-                <canvas id="donutErrorChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                </div>
-            </div>
-        </div>
-      </div>
-      @endif
       <div class="row">
         <div class="col-12">
             <div class="card">
@@ -138,8 +102,6 @@
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-<!-- ChartJS -->
-<script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 
 
 <style type="text/css">
@@ -273,120 +235,5 @@
        ]
       }).buttons().container().appendTo('#errors-table_wrapper .col-md-6:eq(0)');
     });
-
-    //-------------
-    //- DONUT CAM CHART -
-    //-------------
-    // Get context with jQuery - using jQuery's .get() method.
-    var donutCamChartCanvas = $('#donutCamChart').get(0).getContext('2d')
-    var farm_cam_on_cnt =  {{ Js::from($farm_cam_on_cnt) }};
-    var farm_cam_off_cnt =  {{ Js::from($farm_cam_off_cnt) }};
-    var donutData        = {
-      labels: [
-          'ON',
-          'OFF',
-      ],
-      datasets: [
-        {
-          data: [farm_cam_on_cnt,farm_cam_off_cnt],
-          backgroundColor : ['#00a65a', '#f56954'],
-        }
-      ]
-    }
-    var donutOptions     = {
-      maintainAspectRatio : false,
-      responsive : true,
-    }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    new Chart(donutCamChartCanvas, {
-      type: 'doughnut',
-      data: donutData,
-      options: donutOptions,
-      display: true
-    })
-
-
-    //-------------
-    //- DONUT ERROR CHART -
-    //-------------
-    // Get context with jQuery - using jQuery's .get() method.
-    var donutErrorChartCanvas = $('#donutErrorChart').get(0).getContext('2d')
-    var error_type_id_1_cnt =  {{ Js::from($error_type_id_1_cnt) }};
-    var error_type_id_2_cnt =  {{ Js::from($error_type_id_2_cnt) }};
-    var error_type_id_3_cnt =  {{ Js::from($error_type_id_3_cnt) }};
-    var error_type_id_4_cnt =  {{ Js::from($error_type_id_4_cnt) }};
-    var error_type_id_5_cnt =  {{ Js::from($error_type_id_5_cnt) }};
-    var error_type_id_6_cnt =  {{ Js::from($error_type_id_6_cnt) }};
-    var error_type_id_7_cnt =  {{ Js::from($error_type_id_7_cnt) }};
-    var error_type_id_8_cnt =  {{ Js::from($error_type_id_8_cnt) }};
-    var error_type_id_9_cnt =  {{ Js::from($error_type_id_9_cnt) }};
-    var error_type_id_10_cnt =  {{ Js::from($error_type_id_10_cnt) }};
-    var error_type_id_11_cnt =  {{ Js::from($error_type_id_11_cnt) }};
-    var error_type_id_12_cnt =  {{ Js::from($error_type_id_12_cnt) }};
-    var error_type_id_13_cnt =  {{ Js::from($error_type_id_13_cnt) }};
-
-    var error_type_id_1_name = {{ Js::from($error_type_id_1_name) }};
-    var error_type_id_2_name = {{ Js::from($error_type_id_2_name) }};
-    var error_type_id_3_name = {{ Js::from($error_type_id_3_name) }};
-    var error_type_id_4_name = {{ Js::from($error_type_id_4_name) }};
-    var error_type_id_5_name = {{ Js::from($error_type_id_5_name) }};
-    var error_type_id_6_name = {{ Js::from($error_type_id_6_name) }};
-    var error_type_id_7_name = {{ Js::from($error_type_id_7_name) }};
-    var error_type_id_8_name = {{ Js::from($error_type_id_8_name) }};
-    var error_type_id_9_name = {{ Js::from($error_type_id_9_name) }};
-    var error_type_id_10_name = {{ Js::from($error_type_id_10_name) }};
-    var error_type_id_11_name = {{ Js::from($error_type_id_11_name) }};
-    var error_type_id_12_name = {{ Js::from($error_type_id_12_name) }};
-    var error_type_id_13_name = {{ Js::from($error_type_id_13_name) }};
-    var donutData        = {
-      labels: [
-        error_type_id_1_name,
-        error_type_id_2_name,
-        error_type_id_3_name,
-        error_type_id_4_name,
-        error_type_id_5_name,
-        error_type_id_6_name,
-        error_type_id_7_name,
-        error_type_id_8_name,
-        error_type_id_9_name,
-        error_type_id_10_name,
-        error_type_id_11_name,
-        error_type_id_12_name,
-        error_type_id_13_name,
-      ],
-      datasets: [
-        {
-          data: [
-            error_type_id_1_cnt,
-            error_type_id_2_cnt,
-            error_type_id_3_cnt,
-            error_type_id_4_cnt,
-            error_type_id_5_cnt,
-            error_type_id_6_cnt,
-            error_type_id_7_cnt,
-            error_type_id_8_cnt,
-            error_type_id_9_cnt,
-            error_type_id_10_cnt,
-            error_type_id_11_cnt,
-            error_type_id_12_cnt,
-            error_type_id_13_cnt,
-        ],
-          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#02fc4d', '#75151E', '#924E7D', '#B1DBBB', '#B1782B', '#74BA8F', '#E4F33F'],
-        }
-      ]
-    }
-    var donutOptions     = {
-      maintainAspectRatio : false,
-      responsive : true,
-    }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    new Chart(donutErrorChartCanvas, {
-      type: 'doughnut',
-      data: donutData,
-      options: donutOptions,
-    })
-
   </script>
 @endpush
