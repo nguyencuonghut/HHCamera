@@ -185,7 +185,8 @@ class AdminHomeController extends Controller
         $photo_events = [];
         foreach($photos as $photo){
             $hour = Carbon::parse($photo->created_at)->hour;
-            if($hour >= 8){
+            $minute = Carbon::parse($photo->created_at)->minute;
+            if($hour > 8|| (8 == $hour && $minute > 30)){
                 $background_color = '#f56954'; //red
                 $border_color = '#f56954'; //red
             }else{
