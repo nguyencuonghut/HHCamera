@@ -2,6 +2,11 @@
 {{ 'Trang chủ' }}
 @endsection
 
+@push('styles')
+  <!-- fullCalendar -->
+  <link rel="stylesheet" href="{{ asset('plugins/fullcalendar/main.css')}}">
+@endpush
+
 @extends('layouts.base')
 @section('content')
 <!-- Content Wrapper. Contains page content -->
@@ -119,6 +124,30 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <!-- AREA CHART -->
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">BÁO CÁO ẢNH</h3>
+
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div id='calendar'></div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
@@ -129,6 +158,7 @@
 @push('scripts')
 <!-- ChartJS -->
 <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
+<script src="{{ asset('plugins/fullcalendar/main.js')}}"></script>
 
 <script>
     //-------------
@@ -306,6 +336,40 @@
       options: areaChartOptions
     })
 
+
+    /* initialize the calendar
+     -----------------------------------------------------------------*/
+    //Date for the calendar events (dummy data)
+    var date = new Date()
+    var d    = date.getDate(),
+        m    = date.getMonth(),
+        y    = date.getFullYear()
+
+    var Calendar = FullCalendar.Calendar;
+
+    var containerEl = document.getElementById('external-events');
+    var checkbox = document.getElementById('drop-remove');
+    var calendarEl = document.getElementById('calendar');
+
+    var photo_events =  {{ Js::from($photo_events) }};
+    var calendar = new Calendar(calendarEl, {
+      locale: 'vi',
+      headerToolbar: {
+        left  : 'prev,next today',
+        center: 'title',
+        right : 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      themeSystem: 'bootstrap',
+      events: photo_events,
+      eventTimeFormat: {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12:false
+      }
+    });
+
+    calendar.render();
+    // $('#calendar').fullCalendar()
   </script>
 @endpush
 

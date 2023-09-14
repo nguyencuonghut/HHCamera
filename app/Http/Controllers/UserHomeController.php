@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Device;
 use App\Models\Error;
 use App\Models\ErrorType;
+use App\Models\Photo;
 use App\Models\User;
+use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -67,7 +69,28 @@ class UserHomeController extends Controller
         foreach ($errors as $error) {
             $datasheet[$error->created_at->format('d/m/Y')]["error"]++;
         }
-        //dd($datasheet);
+
+        //Photo Event for Calendar
+        $photos = Photo::all();
+        $photo_events = [];
+        foreach($photos as $photo){
+            $hour = Carbon::parse($photo->created_at)->hour;
+            if($hour >= 8){
+                $background_color = '#f56954'; //red
+                $border_color = '#f56954'; //red
+            }else{
+                $background_color = '#00a65a'; //green
+                $border_color = '#00a65a'; //green
+            }
+            $event = [
+                "start" => $photo->created_at,
+                "allDay" => false,
+                "backgroundColor" => $background_color,
+                "borderColor" => $border_color,
+            ];
+            array_push($photo_events, $event);
+        }
+        //dd($photo_events);
 
         return view('user.home',
                     [
@@ -102,6 +125,7 @@ class UserHomeController extends Controller
                         'error_type_id_12_name' => $error_type_id_12_name,
                         'error_type_id_13_name' => $error_type_id_13_name,
                         'datasheet' => $datasheet,
+                        'photo_events' => $photo_events,
                     ]);
     }
 
