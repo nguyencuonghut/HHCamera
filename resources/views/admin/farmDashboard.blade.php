@@ -1,5 +1,5 @@
 @section('title')
-{{ 'Trang chủ' }}
+{{ $farm->name }}
 @endsection
 
 @push('styles')
@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+<!-- fullCalendar -->
+<link rel="stylesheet" href="{{ asset('plugins/fullcalendar/main.css')}}">
 @endpush
 
 @extends('layouts.base')
@@ -18,11 +20,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
+            <h1 class="m-0">Dashboard {{$farm->name}}</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active">Dashboard</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Trang chủ</a></li>
+                <li class="breadcrumb-item active">{{$farm->name}}</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -33,70 +36,6 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>{{$farms_cnt}}</h3>
-
-                <p>Tổng số trại</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-ios-copy"></i>
-              </div>
-              <a href="{{route('admin.farms.index')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>{{$devices_cnt}}</h3>
-
-                <p>Tổng số thiết bị</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-checkmark-circled"></i>
-              </div>
-              <a href="{{route('admin.devices.index')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>{{$cams_cnt}}</h3>
-
-                <p>Tổng số cam</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-load-a"></i>
-              </div>
-              <a href="{{route('admin.devices.index')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>{{$errors_cnt}}</h3>
-
-                <p>Tổng số lỗi</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="{{route('admin.errors.index')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-        </div>
-        <!-- /.row -->
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -107,6 +46,14 @@
                             &nbsp;
                             <span class="badge bg-danger">OFF</span> {{$cam_off_cnt}}
                         </h5>
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                          </button>
+                          <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                          </button>
+                        </div>
                     </div>
 
                     <div class="card-body">
@@ -123,6 +70,15 @@
                         <h5 class="card-title">
                             LỖI
                         </h5>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="card-body">
@@ -158,28 +114,28 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
+                <!-- AREA CHART -->
                 <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">
-                            DANH SÁCH TRẠI
-                        </h5>
+                  <div class="card-header">
+                    <h3 class="card-title">BÁO CÁO ẢNH</h3>
+
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                      </button>
                     </div>
-                  <!-- /.card-header -->
-                  <div class="card-body">
-                    <table id="farms-table" class="table table-bordered table-striped">
-                      <thead>
-                      <tr>
-                        <th>STT</th>
-                        <th>Tên trại</th>
-                        <th>Người phụ trách</th>
-                      </tr>
-                      </thead>
-                    </table>
                   </div>
+                  <div class="card-body">
+                    <div id='calendar'></div>
+                  </div>
+                  <!-- /.card-body -->
                 </div>
             </div>
-          </div>
+        </div>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
@@ -205,72 +161,14 @@
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
+<!-- CalendarJS -->
+<script src="{{ asset('plugins/fullcalendar/main.js')}}"></script>
+
 <style type="text/css">
     .dataTables_wrapper .dt-buttons {
     margin-bottom: -3em
   }
 </style>
-
-
-<script>
-    $(function () {
-      $("#farms-table").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        buttons: [
-            {
-                extend: 'copy',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2]
-                }
-            },
-            {
-                extend: 'csv',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2]
-                }
-
-            },
-            {
-                extend: 'excel',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2]
-                }
-            },
-            {
-                extend: 'pdf',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2]
-                }
-            },
-            {
-                extend: 'print',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2]
-                }
-            },
-            {
-                extend: 'colvis',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2]
-                }
-            }
-        ],
-        dom: 'Blfrtip',
-        ajax: ' {!! route('admin.farmData') !!}',
-        columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'name', name: 'name'},
-            {data: 'user', name: 'user'},
-       ]
-      }).buttons().container().appendTo('#farms-table_wrapper .col-md-6:eq(0)');
-    });
-</script>
 
 <script>
     //-------------
@@ -448,6 +346,40 @@
       options: areaChartOptions
     })
 
+
+    /* initialize the calendar
+     -----------------------------------------------------------------*/
+    //Date for the calendar events (dummy data)
+    var date = new Date()
+    var d    = date.getDate(),
+        m    = date.getMonth(),
+        y    = date.getFullYear()
+
+    var Calendar = FullCalendar.Calendar;
+
+    var containerEl = document.getElementById('external-events');
+    var checkbox = document.getElementById('drop-remove');
+    var calendarEl = document.getElementById('calendar');
+
+    var photo_events =  {{ Js::from($photo_events) }};
+    var calendar = new Calendar(calendarEl, {
+      locale: 'vi',
+      headerToolbar: {
+        left  : 'prev,next today',
+        center: 'title',
+        right : 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      themeSystem: 'bootstrap',
+      events: photo_events,
+      eventTimeFormat: {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12:false
+      }
+    });
+
+    calendar.render();
+    // $('#calendar').fullCalendar()
   </script>
 @endpush
 
