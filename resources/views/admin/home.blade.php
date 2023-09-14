@@ -107,6 +107,15 @@
                             &nbsp;
                             <span class="badge bg-danger">OFF</span> {{$cam_off_cnt}}
                         </h5>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="card-body">
@@ -123,6 +132,15 @@
                         <h5 class="card-title">
                             LỖI
                         </h5>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="card-body">
@@ -164,6 +182,15 @@
                         <h5 class="card-title">
                             DANH SÁCH TRẠI
                         </h5>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                            </button>
+                        </div>
                     </div>
                   <!-- /.card-header -->
                   <div class="card-body">
