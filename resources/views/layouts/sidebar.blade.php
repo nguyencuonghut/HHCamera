@@ -22,7 +22,7 @@
                with font-awesome or any other icon font library -->
           @auth('admin')
           <li class="nav-item">
-            <a href="{{route('admin.home')}}" class="nav-link {{ Request::is('admin/dashboard*') ? 'active' : '' }}">
+            <a href="{{route('admin.home')}}" class="nav-link {{ Request::is('admin') ? 'active' : '' }} {{ Request::is('admin/dashboard*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard

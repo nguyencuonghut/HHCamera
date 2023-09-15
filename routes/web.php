@@ -67,7 +67,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('photos', [AdminPhotoController::class, 'index'])->name('photos.index');
         Route::get('photos/data', [AdminPhotoController::class, 'anyData'])->name('photos.data');
 
-        Route::get('/dashboard', [AdminHomeController::class, 'index'])->name('home');
+        Route::get('/', [AdminHomeController::class, 'index'])->name('home');
         Route::get('/farm-data', [AdminHomeController::class, 'farmData'])->name('farmData');
         Route::get('/dashboard/{farm_id}', [AdminHomeController::class, 'farmDashboard'])->name('farmDashboard');
         Route::get('/profile', [AdminHomeController::class, 'profile'])->name('profile');
