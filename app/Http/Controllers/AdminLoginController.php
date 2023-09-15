@@ -26,7 +26,7 @@ class AdminLoginController extends Controller
 
     public function handleLogin(Request $req)
     {
-        if(Auth::guard('admin')->attempt($req->only(['email', 'password']))) {
+        if(Auth::guard('admin')->attempt(['email' => $req->email, 'password' => $req->password], $req->remember)) {
             return redirect()->route('admin.home');
         }
 

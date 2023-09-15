@@ -26,7 +26,7 @@ class UserLoginController extends Controller
 
     public function handleLogin(Request $req)
     {
-        if(Auth::guard('web')->attempt($req->only(['email', 'password']))) {
+        if(Auth::guard('web')->attempt(['email' => $req->email, 'password' => $req->password], $req->remember)) {
             return redirect()->route('user.home');
         }
 
