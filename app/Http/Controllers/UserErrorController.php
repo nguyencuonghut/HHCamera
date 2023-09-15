@@ -187,7 +187,7 @@ class UserErrorController extends Controller
 
                 return $action;
             })
-            ->rawColumns(['device', 'action'])
+            ->rawColumns(['device', 'cause', 'solution', 'action'])
             ->make(true);
     }
 
