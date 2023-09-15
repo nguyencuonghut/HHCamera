@@ -53,7 +53,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="control-group">
-                                        <label class="required-field" class="control-label">Địa chỉ IP</label>
+                                        <label class="control-label">Địa chỉ IP</label>
                                         <div class="controls">
                                             <input type="text" class="form-control" name="ip" id="ip" required="">
                                         </div>

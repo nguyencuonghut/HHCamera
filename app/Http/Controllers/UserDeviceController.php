@@ -56,7 +56,6 @@ class UserDeviceController extends Controller
         $rules = [
             'name' => 'required|max:255',
             'position' => 'required|max:255',
-            'ip' => 'required|ipv4',
             'status' => 'required',
             'farm_id' => 'required',
             'device_category_id' => 'required',
@@ -66,8 +65,6 @@ class UserDeviceController extends Controller
             'name.max' => 'Tên dài quá 255 ký tự.',
             'position.required' => 'Bạn phải nhập vị trí.',
             'position.max' => 'Vị trí dài quá 255 ký tự.',
-            'ip.required' => 'Bạn phải nhập IP.',
-            'ip.ipv4' => 'Địa chỉ IP không hợp lệ.',
             'status.required' => 'Bạn phải nhập tên.',
             'farm_id.required' => 'Bạn phải nhập tên trại',
             'device_category_id.required' => 'Bạn phải nhập thể loại',
@@ -139,7 +136,6 @@ class UserDeviceController extends Controller
         $rules = [
             'name' => 'required|max:255',
             'position' => 'required|max:255',
-            'ip' => 'required|ipv4',
             'status' => 'required',
             'farm_id' => 'required',
             'device_category_id' => 'required',
@@ -149,8 +145,6 @@ class UserDeviceController extends Controller
             'name.max' => 'Tên dài quá 255 ký tự.',
             'position.required' => 'Bạn phải nhập vị trí.',
             'position.max' => 'Vị trí dài quá 255 ký tự.',
-            'ip.required' => 'Bạn phải nhập IP.',
-            'ip.ipv4' => 'Địa chỉ IP không hợp lệ.',
             'status.required' => 'Bạn phải nhập tên.',
             'farm_id.required' => 'Bạn phải nhập tên trại',
             'device_category_id.required' => 'Bạn phải nhập thể loại',
