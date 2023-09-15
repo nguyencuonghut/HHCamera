@@ -68,7 +68,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">
-                            LỖI
+                            TỔNG HỢP LỖI
                         </h5>
 
                         <div class="card-tools">
