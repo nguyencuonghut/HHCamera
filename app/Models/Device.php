@@ -9,7 +9,7 @@ class Device extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'position', 'ipi', 'status', 'farm_id', 'device_category_id'];
+    protected $fillable = ['name', 'position', 'ip', 'status', 'farm_id', 'device_category_id'];
 
     public function farm()
     {

@@ -40,6 +40,9 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <a href="{{ route('admin.devices.create') }}" class="btn btn-success">Tạo mới</a>
+                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#import_material">
+                    <i class="fas fa-file-excel"></i> Import
+                </button>
                 <table id="devices-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -53,6 +56,34 @@
                   </tr>
                   </thead>
                 </table>
+
+                <!-- Form import -->
+                <form class="form-horizontal" method="post" action="{{ route('admin.devices.import') }}" enctype="multipart/form-data" name="import-material" id="import-material">
+                    {{ csrf_field() }}
+                    <div class="modal fade" id="import_material">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group mb-4">
+                                        <div class="custom-file text-left">
+                                            <input type="file" name="file" class="custom-file-input" id="customFile">
+                                            <label class="custom-file-label" for="customFile">Chọn file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                <button type="submit" class="btn btn-primary">Import</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </form>
               </div>
             </div>
         </div>
@@ -149,6 +180,12 @@
             {data: 'action', name: 'action', orderable: false, searchable: false},
        ]
       }).buttons().container().appendTo('#devices-table_wrapper .col-md-6:eq(0)');
+    });
+
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
   </script>
 @endpush

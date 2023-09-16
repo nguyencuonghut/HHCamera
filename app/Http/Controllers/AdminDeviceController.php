@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\DevicesImport;
 use App\Models\Device;
 use App\Models\DeviceCategory;
 use App\Models\Farm;
 use Datatables;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminDeviceController extends Controller
@@ -257,5 +259,29 @@ class AdminDeviceController extends Controller
             })
             ->rawColumns(['name', 'status', 'device_category', 'farm', 'action'])
             ->make(true);
+    }
+
+    public function import(Request $request)
+    {
+        try{
+            $import = new DevicesImport;
+            Excel::import($import, $request->file('file')->store('files'));
+            $rows = $import->getRowCount();
+            $duplicates = $import->getDuplicateCount();
+            $device_category_not_found_row = $import->getDeviceCategoryNotFound();
+            if($device_category_not_found_row){
+                Alert::toast('Thể loại tại dòng số  ' .$device_category_not_found_row. ' bị sai. Vui lòng kiểm tra lại file!', 'error', 'top-right');
+                return redirect()->back();
+            }
+            if($duplicates){
+                Alert::toast('Import '. $rows . ' dòng dữ liệu thành công! Có ' . $duplicates . ' dòng bị trùng lặp!', 'success', 'top-right');
+            }else{
+                Alert::toast('Import '. $rows . ' dòng dữ liệu thành công!', 'success', 'top-right');
+            }
+            return redirect()->back();
+        } catch (\Exception $e) {
+            Alert::toast('Có lỗi xảy ra trong quá trình import dữ liệu. Vui lòng kiểm tra lại file!', 'error', 'top-right');
+            return redirect()->back();
+        }
     }
 }

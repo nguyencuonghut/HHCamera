@@ -9,6 +9,8 @@ class Farm extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'description'];
+
     public function user()
     {
         return $this->hasOne(User::class);
