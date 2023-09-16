@@ -95,13 +95,12 @@ class AdminFarmController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'name' => 'required|unique:farms|max:255',
+            'name' => 'required:farms|max:255',
             'description' => 'max:255',
             'password' => 'confirmed|',
         ];
         $messages = [
             'name.required' => 'Bạn phải nhập tên.',
-            'name.unique' => 'Tên này đã bị trùng với trại khác.',
             'name.max' => 'Tên dài quá 255 ký tự.',
             'description.max' => 'Mô tả dài quá 255 ký tự.',
         ];
