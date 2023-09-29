@@ -40,13 +40,13 @@ class UserPhotoController extends Controller
     {
         $rules = [
             'filenames' => 'required',
-            'filenames.*' => 'required|mimes:jpg,png,jpeg|max:5000'
+            'filenames.*' => 'required|mimes:jpg,png,jpeg|max:15000'
         ];
         $messages = [
             'filenames.required' => 'Bạn phải chọn ảnh.',
             'filenames.*.required' => 'Bạn phải chọn ảnh.',
             'filenames.*.mimes' => 'Bạn phải chọn file ảnh có định dạng .jpg, .png, .jpeg',
-            'filenames.*.max' => 'File ảnh vượt quá dung lượng cho phép 5MB'
+            'filenames.*.max' => 'File ảnh vượt quá dung lượng cho phép 15MB'
         ];
         $request->validate($rules,$messages);
 
