@@ -71,7 +71,7 @@ class UserHomeController extends Controller
         }
 
         //Photo Event for Calendar
-        $photos = Photo::all();
+        $photos = Photo::where('user_id', Auth::user()->id)->get();
         $photo_events = [];
         foreach($photos as $photo){
             $hour = Carbon::parse($photo->created_at)->hour;
