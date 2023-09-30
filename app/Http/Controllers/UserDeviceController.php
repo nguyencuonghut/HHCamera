@@ -101,6 +101,10 @@ class UserDeviceController extends Controller
     public function show($id)
     {
         $device = Device::findOrFail($id);
+        if($device->farm_id != Auth::user()->farm_id){
+            Alert::toast('Bạn không có quyền xem thiết bị này!', 'error', 'top-right');
+            return redirect()->route('devices.index');
+        }
         return view('user.device.show', ['device' => $device]);
     }
 
@@ -116,6 +120,10 @@ class UserDeviceController extends Controller
         $farm = Farm::findOrFail($farm_id);
         $device_categories = DeviceCategory::all()->pluck('name', 'id');
         $device = Device::findOrFail($id);
+        if($device->farm_id != $farm_id){
+            Alert::toast('Bạn không có quyền sửa thiết bị này!', 'error', 'top-right');
+            return redirect()->route('devices.index');
+        }
         return view('user.device.edit',
                     ['device' => $device,
                     'farm' => $farm,
@@ -187,6 +195,12 @@ class UserDeviceController extends Controller
     {
         $device = Device::findOrFail($id);
 
+        //Check condition
+        if($device->farm_id != Auth::user()->farm_id){
+            Alert::toast('Bạn không có quyền sửa thiết bị này!', 'error', 'top-right');
+            return redirect()->route('devices.index');
+        }
+
         // Create Device Log
         $device_log = new DeviceLog();
         $device_log->device_id = $device->id;
@@ -254,6 +268,11 @@ class UserDeviceController extends Controller
     public function getChangeStatus($id)
     {
         $device = Device::findOrFail($id);
+
+        if($device->farm_id != Auth::user()->farm_id){
+            Alert::toast('Bạn không có quyền đổi trạng thái thiết bị này!', 'error', 'top-right');
+            return redirect()->route('devices.index');
+        }
         return view('user.device.changeStatus', ['device' => $device]);
     }
 
